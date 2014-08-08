@@ -27,6 +27,7 @@
 
 #include <App/PropertyStandard.h>
 #include <App/PropertyUnits.h>
+#include <PropertyLinks.h>
 #include "../../Part/App/PartFeature.h"
 
 namespace Part
@@ -41,11 +42,11 @@ public:
 
     //Properties
 
-    App::PropertyList Border;  //Border Edges (Must Be Closed) (C0 is required for the border)
+    App::PropertyLinkList Border;  //Border Edges (Must Be Closed) (C0 is required for the border)
     App::PropertyIntegerList BOrd; //Order of Constraint
-    App::PropertyList Curves;  //Other Constraint Curves
+    App::PropertyLinkList Curves;  //Other Constraint Curves
     App::PropertyIntegerList COrd; //Order of Constraint
-    App::PropertyList Points;  //Constraint Points (on Surface)
+    App::PropertyLinkList Points;  //Constraint Points (on Surface)
 
     // recalculate the feature
     App::DocumentObjectExecReturn *execute(void);

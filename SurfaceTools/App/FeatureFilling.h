@@ -27,6 +27,7 @@
 
 #include <App/PropertyStandard.h>
 #include <App/PropertyUnits.h>
+#include <App/PropertyLinks.h>
 #include "../../Part/App/PartFeature.h"
 
 namespace Part

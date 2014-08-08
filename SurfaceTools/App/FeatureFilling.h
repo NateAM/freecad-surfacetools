@@ -41,11 +41,11 @@ public:
 
     //Properties
 
-    App::PropertyLinkList Border;                //Border Edges (Must Be Closed) (C0 is required for the border)
-    App::PropertyLinkListEnum BOrd {C0, G1, G2}; //Order of Constraint
-    App::PropertyLinkList Curves;                //Other Constraint Curves
-    App::PropertyLinkListEnum COrd {C0, G1, G2}; //Order of Constraint
-    App::PropertyLinkList Points;                //Constraint Points (on Surface)
+    App::PropertyLinkList Border;  //Border Edges (Must Be Closed) (C0 is required for the border)
+    App::PropertyLinkListInt BOrd; //Order of Constraint
+    App::PropertyLinkList Curves;  //Other Constraint Curves
+    App::PropertyLinkListInt COrd; //Order of Constraint
+    App::PropertyLinkList Points;  //Constraint Points (on Surface)
 
     // recalculate the feature
     App::DocumentObjectExecReturn *execute(void);

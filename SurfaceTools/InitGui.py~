@@ -1,0 +1,44 @@
+# SurfaceTools gui init module
+# (c) 2001 Juergen Riegel LGPL
+
+class SurfaceToolsWorkbench ( Workbench ):
+	"SurfaceTools workbench object"
+	Icon = """
+			/* XPM */
+			static const char *test_icon[]={
+			"16 16 2 1",
+			"a c #000000",
+			". c None",
+			"................",
+			"................",
+			"..############..",
+			"..############..",
+			"..############..",
+			"......####......",
+			"......####......",
+			"......####......",
+			"......####......",
+			"......####......",
+			"......####......",
+			"......####......",
+			"......####......",
+			"......####......",
+			"................",
+			"................"};
+			"""
+	MenuText = "SurfaceTools"
+	ToolTip = "SurfaceTools workbench"
+	def Initialize(self):
+		# load the module
+		import SurfaceToolsGui
+	def GetClassName(self):
+		return "SurfaceToolsGui::Workbench"
+	def Activated(self):
+               # do something here if needed...
+		Msg ("MyWorkbench.Activated()\n")
+
+	def Deactivated(self):
+               # do something here if needed...
+		Msg ("MyWorkbench.Deactivated()\n")
+
+Gui.addWorkbench(SurfaceToolsWorkbench())

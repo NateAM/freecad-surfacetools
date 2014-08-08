@@ -2,6 +2,7 @@ FILE(REMOVE_RECURSE
   "CMakeFiles/SurfaceTools.dir/AppSurfaceTools.cpp.o"
   "CMakeFiles/SurfaceTools.dir/AppSurfaceToolsPy.cpp.o"
   "CMakeFiles/SurfaceTools.dir/PreCompiled.cpp.o"
+  "CMakeFiles/SurfaceTools.dir/FeatureFilling.cpp.o"
   "../../../../Mod/SurfaceTools/Init.py"
   "../../../../Mod/SurfaceTools/SurfaceTools.pdb"
   "../../../../Mod/SurfaceTools/SurfaceTools.so"

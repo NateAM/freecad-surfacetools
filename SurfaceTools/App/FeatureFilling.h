@@ -42,9 +42,9 @@ public:
     //Properties
 
     App::PropertyLinkList Border;  //Border Edges (Must Be Closed) (C0 is required for the border)
-    App::PropertyLinkListInt BOrd; //Order of Constraint
+    App::PropertyIntegerList BOrd; //Order of Constraint
     App::PropertyLinkList Curves;  //Other Constraint Curves
-    App::PropertyLinkListInt COrd; //Order of Constraint
+    App::PropertyIntegerList COrd; //Order of Constraint
     App::PropertyLinkList Points;  //Constraint Points (on Surface)
 
     // recalculate the feature

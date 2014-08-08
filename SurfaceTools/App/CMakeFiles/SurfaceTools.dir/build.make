@@ -118,8 +118,31 @@ src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/PreCompiled.cpp.o.provides:
 
 src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/PreCompiled.cpp.o.provides.build: src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/PreCompiled.cpp.o
 
-Mod/SurfaceTools/Init.py: src/Mod/SurfaceTools/Init.py
+src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/FeatureFilling.cpp.o: src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/flags.make
+src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/FeatureFilling.cpp.o: src/Mod/SurfaceTools/App/FeatureFilling.cpp
 	$(CMAKE_COMMAND) -E cmake_progress_report /home/nathan/Desktop/free-cad-code/CMakeFiles $(CMAKE_PROGRESS_4)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/FeatureFilling.cpp.o"
+	cd /home/nathan/Desktop/free-cad-code/src/Mod/SurfaceTools/App && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/SurfaceTools.dir/FeatureFilling.cpp.o -c /home/nathan/Desktop/free-cad-code/src/Mod/SurfaceTools/App/FeatureFilling.cpp
+
+src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/FeatureFilling.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SurfaceTools.dir/FeatureFilling.cpp.i"
+	cd /home/nathan/Desktop/free-cad-code/src/Mod/SurfaceTools/App && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/nathan/Desktop/free-cad-code/src/Mod/SurfaceTools/App/FeatureFilling.cpp > CMakeFiles/SurfaceTools.dir/FeatureFilling.cpp.i
+
+src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/FeatureFilling.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SurfaceTools.dir/FeatureFilling.cpp.s"
+	cd /home/nathan/Desktop/free-cad-code/src/Mod/SurfaceTools/App && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/nathan/Desktop/free-cad-code/src/Mod/SurfaceTools/App/FeatureFilling.cpp -o CMakeFiles/SurfaceTools.dir/FeatureFilling.cpp.s
+
+src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/FeatureFilling.cpp.o.requires:
+.PHONY : src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/FeatureFilling.cpp.o.requires
+
+src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/FeatureFilling.cpp.o.provides: src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/FeatureFilling.cpp.o.requires
+	$(MAKE) -f src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/build.make src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/FeatureFilling.cpp.o.provides.build
+.PHONY : src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/FeatureFilling.cpp.o.provides
+
+src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/FeatureFilling.cpp.o.provides.build: src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/FeatureFilling.cpp.o
+
+Mod/SurfaceTools/Init.py: src/Mod/SurfaceTools/Init.py
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/nathan/Desktop/free-cad-code/CMakeFiles $(CMAKE_PROGRESS_5)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Generating ../../../../Mod/SurfaceTools/Init.py"
 	cd /home/nathan/Desktop/free-cad-code/src/Mod/SurfaceTools/App && /usr/bin/cmake -E copy /home/nathan/Desktop/free-cad-code/src/Mod/SurfaceTools/Init.py /home/nathan/Desktop/free-cad-code/Mod/SurfaceTools/Init.py
 
@@ -127,7 +150,8 @@ Mod/SurfaceTools/Init.py: src/Mod/SurfaceTools/Init.py
 SurfaceTools_OBJECTS = \
 "CMakeFiles/SurfaceTools.dir/AppSurfaceTools.cpp.o" \
 "CMakeFiles/SurfaceTools.dir/AppSurfaceToolsPy.cpp.o" \
-"CMakeFiles/SurfaceTools.dir/PreCompiled.cpp.o"
+"CMakeFiles/SurfaceTools.dir/PreCompiled.cpp.o" \
+"CMakeFiles/SurfaceTools.dir/FeatureFilling.cpp.o"
 
 # External object files for target SurfaceTools
 SurfaceTools_EXTERNAL_OBJECTS =
@@ -135,6 +159,7 @@ SurfaceTools_EXTERNAL_OBJECTS =
 Mod/SurfaceTools/SurfaceTools.so: src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/AppSurfaceTools.cpp.o
 Mod/SurfaceTools/SurfaceTools.so: src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/AppSurfaceToolsPy.cpp.o
 Mod/SurfaceTools/SurfaceTools.so: src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/PreCompiled.cpp.o
+Mod/SurfaceTools/SurfaceTools.so: src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/FeatureFilling.cpp.o
 Mod/SurfaceTools/SurfaceTools.so: lib/libFreeCADApp.so
 Mod/SurfaceTools/SurfaceTools.so: lib/libFreeCADBase.so
 Mod/SurfaceTools/SurfaceTools.so: /usr/lib/libpython2.7.so
@@ -159,6 +184,7 @@ src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/build: Mod/SurfaceTools/Sur
 src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/requires: src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/AppSurfaceTools.cpp.o.requires
 src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/requires: src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/AppSurfaceToolsPy.cpp.o.requires
 src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/requires: src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/PreCompiled.cpp.o.requires
+src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/requires: src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/FeatureFilling.cpp.o.requires
 .PHONY : src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/requires
 
 src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/clean:

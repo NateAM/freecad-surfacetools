@@ -201,6 +201,30 @@ AppSurfaceToolsPy.cpp.s:
 	cd /home/nathan/Desktop/free-cad-code && $(MAKE) -f src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/build.make src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/AppSurfaceToolsPy.cpp.s
 .PHONY : AppSurfaceToolsPy.cpp.s
 
+FeatureFilling.o: FeatureFilling.cpp.o
+.PHONY : FeatureFilling.o
+
+# target to build an object file
+FeatureFilling.cpp.o:
+	cd /home/nathan/Desktop/free-cad-code && $(MAKE) -f src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/build.make src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/FeatureFilling.cpp.o
+.PHONY : FeatureFilling.cpp.o
+
+FeatureFilling.i: FeatureFilling.cpp.i
+.PHONY : FeatureFilling.i
+
+# target to preprocess a source file
+FeatureFilling.cpp.i:
+	cd /home/nathan/Desktop/free-cad-code && $(MAKE) -f src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/build.make src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/FeatureFilling.cpp.i
+.PHONY : FeatureFilling.cpp.i
+
+FeatureFilling.s: FeatureFilling.cpp.s
+.PHONY : FeatureFilling.s
+
+# target to generate assembly for a file
+FeatureFilling.cpp.s:
+	cd /home/nathan/Desktop/free-cad-code && $(MAKE) -f src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/build.make src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/FeatureFilling.cpp.s
+.PHONY : FeatureFilling.cpp.s
+
 PreCompiled.o: PreCompiled.cpp.o
 .PHONY : PreCompiled.o
 
@@ -244,6 +268,9 @@ help:
 	@echo "... AppSurfaceToolsPy.o"
 	@echo "... AppSurfaceToolsPy.i"
 	@echo "... AppSurfaceToolsPy.s"
+	@echo "... FeatureFilling.o"
+	@echo "... FeatureFilling.i"
+	@echo "... FeatureFilling.s"
 	@echo "... PreCompiled.o"
 	@echo "... PreCompiled.i"
 	@echo "... PreCompiled.s"

@@ -160,7 +160,7 @@ bool appconstr_crv(BRepFill_Filling& builder,const App::PropertyLinkSubList& anE
         TopoDS_Shape s = ts.getSubShape(type.getName()); //Setup a shape object
         TopoDS_Edge edge; //Setup an edge object
         if(s.ShapeType() == TopAbs_EDGE) {edge = TopoDS::Edge(s);} //Check Shape type and assign edge
-        else{Standard_Failure::Raise("Curves must be type TopoDS_Edge");} //Raise exception
+        else{Standard_Failure::Raise("Curves must be type TopoDS_Edge");return false;} //Raise exception
 
 	//PropertyEnumerateList doesn't exist yet. Fix when implemented
 

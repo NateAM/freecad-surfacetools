@@ -20,9 +20,8 @@
  *                                                                         *
  ***************************************************************************/
 
-
-#ifndef SURFACETOOLS_FEATUREFILLING_H
-#define SURFACETOOLS_FEATUREFILLING_H
+#ifndef SURFACETOOLS_FEATURESEWING_H
+#define SURFACETOOLS_FEATURESEWING_H
 #endif
 
 #include <App/PropertyStandard.h>
@@ -33,32 +32,20 @@
 namespace SurfaceTools
 {
 
-class SurfaceToolsExport Filling :  public Part::Feature
+class SurfaceToolsExport Sewing :  public Part::Feature
 {
-    PROPERTY_HEADER(SurfaceTools::Filling);
+    PROPERTY_HEADER(SurfaceTools::Sewing);
 
 public:
-    Filling();
+    Sewing();
 
-    //Properties of Curves
+    App::PropertyLinkSubList aShapeList; //Shapes (Edges and Faces) to be sewn.
 
-    App::PropertyLinkSubList Border;  //Border Edges (C0 is required for the border)
-    App::PropertyIntegerList BOrd;    //Order of Constraint
-    App::PropertyLinkSubList Curves;  //Other Constraint Curves
-    App::PropertyIntegerList COrd;    //Order of Constraint
-    App::PropertyLinkSubList Points;  //Constraint Points (on Surface)
-
-    //Algorithm Variables
-    App::PropertyInteger Degree;      //Starting degree
-    App::PropertyInteger NbPtsOnCur;  //Number of points on an edge for constraint
-    App::PropertyInteger NbIter;      //Number of iterations
-    App::PropertyBool Anisotropie;    //?
-    App::PropertyFloat Tol2d;         //2D Tolerance
-    App::PropertyFloat Tol3d;         //3D Tolerance
-    App::PropertyFloat TolAng;        //G1 tolerance
-    App::PropertyFloat TolCurv;       //G2 tolerance
-    App::PropertyInteger MaxDeg;      //Maximum curve degree
-    App::PropertyInteger MaxSegments; //Maximum number of segments
+    App::PropertyFloat tol;
+    App::PropertyBool sewopt;         //Option for sewing (if false only control)
+    App::PropertyBool degenshp;       //Option for analysis of degenerated shapes
+    App::PropertyBool cutfreeedges;   //Option for cutting of free edges
+    App::PropertyBool nonmanifold;    //Option for non-manifold processing
 
     // recalculate the feature
     App::DocumentObjectExecReturn *execute(void);
@@ -69,4 +56,4 @@ public:
     }
 
 };
-} //Namespace SurfaceTools
+}//Namespace Surfacetools

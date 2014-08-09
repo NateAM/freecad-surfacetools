@@ -21,32 +21,44 @@
  ***************************************************************************/
 
 
-#ifndef PART_FEATUREFILLING_H
-#define PART_FEATUREFILLING_H
+#ifndef SURFACETOOLS_FEATUREFILLING_H
+#define SURFACETOOLS_FEATUREFILLING_H
 #endif
 
 #include <App/PropertyStandard.h>
 #include <App/PropertyUnits.h>
 #include <App/PropertyLinks.h>
-#include "../../Part/App/PartFeature.h"
+#include "Mod/Part/App/PartFeature.h"
 
-namespace Part
+namespace SurfaceTools
 {
 
-class Filling :  public Part::Feature
+class SurfaceToolsExport Filling :  public Part::Feature
 {
-    PROPERTY_HEADER(Part::Filling);
+    PROPERTY_HEADER(SurfaceTools::Filling);
 
 public:
     Filling();
 
-    //Properties
+    //Properties of Curves
 
-    App::PropertyLinkList Border;  //Border Edges (Must Be Closed) (C0 is required for the border)
-    App::PropertyIntegerList BOrd; //Order of Constraint
-    App::PropertyLinkList Curves;  //Other Constraint Curves
-    App::PropertyIntegerList COrd; //Order of Constraint
-    App::PropertyLinkList Points;  //Constraint Points (on Surface)
+    App::PropertyLinkList Border;     //Border Edges (Must Be Closed) (C0 is required for the border)
+    App::PropertyIntegerList BOrd;    //Order of Constraint
+    App::PropertyLinkList Curves;     //Other Constraint Curves
+    App::PropertyIntegerList COrd;    //Order of Constraint
+    App::PropertyLinkList Points;     //Constraint Points (on Surface)
+
+    //Algorithm Variables
+    App::PropertyInteger Degree;      //Starting degree
+    App::PropertyInteger NbPtsOnCur;  //Number of points on an edge for constraint
+    App::PropertyInteger NbIter;      //Number of iterations
+    App::PropertyBool Anisotropie;    //?
+    App::PropertyFloat Tol2d;         //2D Tolerance
+    App::PropertyFloat Tol3d;         //3D Tolerance
+    App::PropertyFloat TolAng;        //G1 tolerance
+    App::PropertyFloat TolCurv;       //G2 tolerance
+    App::PropertyInteger MaxDeg;      //Maximum curve degree
+    App::PropertyInteger MaxSegments; //Maximum number of segments
 
     // recalculate the feature
     App::DocumentObjectExecReturn *execute(void);

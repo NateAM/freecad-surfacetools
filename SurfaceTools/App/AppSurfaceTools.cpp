@@ -27,6 +27,7 @@
 #endif
 
 #include <Base/Console.h>
+#include "FeatureFilling.h"
 
 
 /* registration table  */
@@ -38,13 +39,16 @@ PyDoc_STRVAR(module_SurfaceTools_doc,
 
 /* Python entry */
 extern "C" {
-void SurfaceToolsAppExport initSurfaceTools() {
+void SurfaceToolsExport initSurfaceTools() {
 
     // ADD YOUR CODE HERE
     //
     //
     (void) Py_InitModule3("SurfaceTools", SurfaceTools_methods, module_SurfaceTools_doc);   /* mod name, table ptr */
     Base::Console().Log("Loading SurfaceTools module... done\n");
+
+    // Add types to module
+    SurfaceTools::Filling    ::init();
 }
 
 } // extern "C"

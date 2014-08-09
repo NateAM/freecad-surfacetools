@@ -32,9 +32,31 @@
 #include <Base/Tools.h>
 #include <Base/Exception.h>
 
-using namespace Part;
+using namespace SurfaceTools;
 
-PROPERTY_SOURCE(Part::Filling, Part::Feature)
+PROPERTY_SOURCE(SurfaceTools::Filling, Part::Feature)
+
+//Initial values
+
+Filling::Filling()
+{
+    ADD_PROPERTY(Border,(0));
+    ADD_PROPERTY(BOrd,(-1));
+    ADD_PROPERTY(Curves,(0));
+    ADD_PROPERTY(COrd,(-1));
+    ADD_PROPERTY(Points,(0));
+
+    ADD_PROPERTY(Degree,(3));
+    ADD_PROPERTY(NbPtsOnCur,(3));
+    ADD_PROPERTY(NbIter,(2));
+    ADD_PROPERTY(Anisotropie,(false));
+    ADD_PROPERTY(Tol2d,(0.00001));
+    ADD_PROPERTY(Tol3d,(0.0001));
+    ADD_PROPERTY(TolAng,(0.001));
+    ADD_PROPERTY(TolCurv,(0.01));
+    ADD_PROPERTY(MaxDeg,(8));
+    ADD_PROPERTY(MaxSegments,(10000));
+}
 
 //Check if any components of the surface have been modified
 
@@ -52,7 +74,30 @@ short Filling::mustExecute() const
 App::DocumentObjectExecReturn *Filling::execute(void)
 {
 
+    //Assign Variables
+
+    unsigned int Deg  = Degree.getValue();
+    unsigned int NPOC = NbPtsOnCur.getValue();
+    unsigned int NI   = NbIter.getValue();
+    bool Anis = Anisotropie.getValue();
+    double T2d = Tol2d.getValue();
+    double T3d = Tol3d.getValue();
+    double TG1 = TolAng.getValue();
+    double TG2 = TolCurv.getValue();
+    unsigned int Mdeg = MaxDeg.getValue();
+    unsigned int Mseg = MaxSegments.getValue();
+
+    //Perform error checking
+
+
+    //Begin Construction
     try{
+
+        BRepFill_Filling builder;
+
+        //BRepFill_Filling::BRepFill_Filling(Deg,NPOC,NI,Anis,T2d,T3d,TG1,TG2,Mdeg,Mseg) builder; //Generate builder
+
+        //Assign Boundaries
 
 
     } //End Try

@@ -21,16 +21,20 @@
  ***************************************************************************/
 
 
-#ifndef APP_PRECOMPILED_H
-#define APP_PRECOMPILED_H
+//#ifndef APP_PRECOMPILED_H
+//#define APP_PRECOMPILED_H
+#ifndef PRECOMPILED_H
+#define PRECOMPILED_H
 
 #include <FCConfig.h>
 
 // Exporting of App classes
 #ifdef FC_OS_WIN32
-# define SurfaceToolsAppExport __declspec(dllexport)
+# define SurfaceToolsExport __declspec(dllexport)
+# define PartExport     __declspec(dllimport)
 #else // for Linux
-# define SurfaceToolsAppExport
+# define SurfaceToolsExport
+# define PartExport
 #endif
 
 #ifdef _PreComp_

@@ -93,11 +93,13 @@ App::DocumentObjectExecReturn *Filling::execute(void)
     //Begin Construction
     try{
 
-        BRepFill_Filling builder;
+        //Generate Builder with Algorithm Variables
 
-        //BRepFill_Filling::BRepFill_Filling(Deg,NPOC,NI,Anis,T2d,T3d,TG1,TG2,Mdeg,Mseg) builder; //Generate builder
+        BRepFill_Filling builder(Deg,NPOC,NI,Anis,T2d,T3d,TG1,TG2,Mdeg,Mseg);
 
         //Assign Boundaries
+
+        
 
 
     } //End Try

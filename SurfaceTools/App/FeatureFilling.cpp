@@ -23,12 +23,15 @@
 #include "PreCompiled.h"
 #ifndef _PreComp_
 #include <BRepBuilderAPI_MakeFace.hxx>
-# include <TopoDS.hxx>
-# include <Precision.hxx>
+#include <TopoDS.hxx>
+#include <TopoDS_Edge.hxx>
+#include <Precision.hxx>
 #endif
 
 #include "FeatureFilling.h"
 #include <BRepFill_Filling.hxx>
+#include <BRep_Tool.hxx>
+#include <gp_Pnt.hxx>
 #include <Base/Tools.h>
 #include <Base/Exception.h>
 
@@ -58,6 +61,10 @@ Filling::Filling()
     ADD_PROPERTY(MaxSegments,(10000));
 }
 
+//Define Functions
+
+bool appconstr_crv(BRepFill_Filling& builder,const std::list<TopoDS_Edge>& anEdge,const std::list<int>& Order, bool bnd);
+
 //Check if any components of the surface have been modified
 
 short Filling::mustExecute() const
@@ -76,6 +83,8 @@ App::DocumentObjectExecReturn *Filling::execute(void)
 
     //Assign Variables
 
+    
+
     unsigned int Deg  = Degree.getValue();
     unsigned int NPOC = NbPtsOnCur.getValue();
     unsigned int NI   = NbIter.getValue();
@@ -86,6 +95,8 @@ App::DocumentObjectExecReturn *Filling::execute(void)
     double TG2 = TolCurv.getValue();
     unsigned int Mdeg = MaxDeg.getValue();
     unsigned int Mseg = MaxSegments.getValue();
+
+    bool res;
 
     //Perform error checking
 
@@ -99,8 +110,28 @@ App::DocumentObjectExecReturn *Filling::execute(void)
 
         //Assign Boundaries
 
-        
+        res = appconstr_crv(&builder, &Border, &BOrd, true);
 
+        if(!res){
+            Standard_Failure::Raise("Failed to create a boundary constraint. Check constraints on boundaries.");
+        }
+
+        //Assign Additional Curves
+
+        res = appconstr_crv(&builder, &Curves, &COrd, false);
+
+        if(!res){
+            Standard_Failure::Raise("Failed to create a curve constraint. Check constraints on curves.");
+        }
+
+        //Assign Point Constraints (Do this next)
+
+        //Build the face
+        builder.Build();
+
+        //Return the face
+        TopoDS_Face aFace = builder.Face();
+        return App::DocumentObject::StdReturn;
 
     } //End Try
     catch (Standard_Failure) {
@@ -109,3 +140,32 @@ App::DocumentObjectExecReturn *Filling::execute(void)
     } //End Catch
 
 } //End execute
+
+bool appconstr_crv(BRepFill_Filling& builder, const std::list<TopoDS_Edge>& anEdge, const std::list<int>& Order, bool bnd){
+
+    GeomAbs_Shape ordtmp;
+
+    std::list<int>::const_iterator bc = Order.begin();
+
+    int res;
+
+    for (std::list<TopoDS_Edge>::const_iterator it = anEdge.begin(); it != anEdge.end(); ++it) {
+
+	//PropertyEnumerateList doesn't exist yet. Fix when implemented
+
+	if(*bc==0){ordtmp = GeomAbs_C0;}
+        else if(*bc==1){ordtmp = GeomAbs_G1;}
+        else if(*bc==2){ordtmp = GeomAbs_G2;}
+	else{return false;}
+
+        res = builder.Add(*it,ordtmp,bnd);
+
+        if(!res){return false;}
+
+        bc++;
+
+    }
+
+    return true;
+
+}

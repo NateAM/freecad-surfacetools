@@ -577,6 +577,8 @@ src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/FeatureFilling.cpp.o
  /usr/local/lib/oce-0.16/../../include/oce/TopoDS.lxx
  /usr/local/lib/oce-0.16/../../include/oce/TopoDS_Compound.hxx
  /usr/local/lib/oce-0.16/../../include/oce/TopoDS_Compound.lxx
+ /usr/local/lib/oce-0.16/../../include/oce/TopoDS_Edge.hxx
+ /usr/local/lib/oce-0.16/../../include/oce/TopoDS_Edge.lxx
  /usr/local/lib/oce-0.16/../../include/oce/TopoDS_Face.hxx
  /usr/local/lib/oce-0.16/../../include/oce/TopoDS_Face.lxx
  /usr/local/lib/oce-0.16/../../include/oce/TopoDS_ListIteratorOfListOfShape.hxx

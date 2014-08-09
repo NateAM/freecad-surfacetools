@@ -42,7 +42,7 @@ public:
 
     //Properties of Curves
 
-    App::PropertyLinkList Border;     //Border Edges (Must Be Closed) (C0 is required for the border)
+    App::PropertyLinkList Border;     //Border Edges (C0 is required for the border)
     App::PropertyIntegerList BOrd;    //Order of Constraint
     App::PropertyLinkList Curves;     //Other Constraint Curves
     App::PropertyIntegerList COrd;    //Order of Constraint

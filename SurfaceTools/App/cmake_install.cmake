@@ -46,7 +46,7 @@ FILE(INSTALL DESTINATION "/usr/local/lib" TYPE SHARED_LIBRARY FILES "/home/natha
      NOT IS_SYMLINK "$ENV{DESTDIR}/usr/local/lib/SurfaceTools.so")
     FILE(RPATH_CHANGE
          FILE "$ENV{DESTDIR}/usr/local/lib/SurfaceTools.so"
-         OLD_RPATH "/home/nathan/Desktop/free-cad-code/lib:"
+         OLD_RPATH "/home/nathan/Desktop/free-cad-code/lib:/home/nathan/Desktop/free-cad-code/Mod/Part:/usr/local/lib:"
          NEW_RPATH "/usr/local/lib")
     IF(CMAKE_INSTALL_DO_STRIP)
       EXECUTE_PROCESS(COMMAND "/usr/bin/strip" "$ENV{DESTDIR}/usr/local/lib/SurfaceTools.so")

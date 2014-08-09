@@ -439,6 +439,7 @@ src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/FeatureFilling.cpp.o: /usr/
 src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/FeatureFilling.cpp.o: /usr/local/lib/oce-0.16/../../include/oce/BRepLib_MakeFace.hxx
 src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/FeatureFilling.cpp.o: /usr/local/lib/oce-0.16/../../include/oce/BRepLib_MakeShape.hxx
 src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/FeatureFilling.cpp.o: /usr/local/lib/oce-0.16/../../include/oce/BRepLib_ShapeModification.hxx
+src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/FeatureFilling.cpp.o: /usr/local/lib/oce-0.16/../../include/oce/BRep_Tool.hxx
 src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/FeatureFilling.cpp.o: /usr/local/lib/oce-0.16/../../include/oce/Bnd_Sphere.hxx
 src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/FeatureFilling.cpp.o: /usr/local/lib/oce-0.16/../../include/oce/Bnd_Sphere.lxx
 src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/FeatureFilling.cpp.o: /usr/local/lib/oce-0.16/../../include/oce/Extrema_ExtAlgo.hxx
@@ -472,12 +473,17 @@ src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/FeatureFilling.cpp.o: /usr/
 src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/FeatureFilling.cpp.o: /usr/local/lib/oce-0.16/../../include/oce/Handle_GeomPlate_PointConstraint.hxx
 src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/FeatureFilling.cpp.o: /usr/local/lib/oce-0.16/../../include/oce/Handle_GeomPlate_SequenceNodeOfSequenceOfPointConstraint.hxx
 src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/FeatureFilling.cpp.o: /usr/local/lib/oce-0.16/../../include/oce/Handle_GeomPlate_Surface.hxx
+src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/FeatureFilling.cpp.o: /usr/local/lib/oce-0.16/../../include/oce/Handle_Geom_Curve.hxx
 src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/FeatureFilling.cpp.o: /usr/local/lib/oce-0.16/../../include/oce/Handle_Geom_Geometry.hxx
 src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/FeatureFilling.cpp.o: /usr/local/lib/oce-0.16/../../include/oce/Handle_Geom_Surface.hxx
 src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/FeatureFilling.cpp.o: /usr/local/lib/oce-0.16/../../include/oce/Handle_MMgt_TShared.hxx
 src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/FeatureFilling.cpp.o: /usr/local/lib/oce-0.16/../../include/oce/Handle_Plate_SequenceNodeOfSequenceOfLinearScalarConstraint.hxx
 src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/FeatureFilling.cpp.o: /usr/local/lib/oce-0.16/../../include/oce/Handle_Plate_SequenceNodeOfSequenceOfLinearXYZConstraint.hxx
 src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/FeatureFilling.cpp.o: /usr/local/lib/oce-0.16/../../include/oce/Handle_Plate_SequenceNodeOfSequenceOfPinpointConstraint.hxx
+src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/FeatureFilling.cpp.o: /usr/local/lib/oce-0.16/../../include/oce/Handle_Poly_Polygon2D.hxx
+src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/FeatureFilling.cpp.o: /usr/local/lib/oce-0.16/../../include/oce/Handle_Poly_Polygon3D.hxx
+src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/FeatureFilling.cpp.o: /usr/local/lib/oce-0.16/../../include/oce/Handle_Poly_PolygonOnTriangulation.hxx
+src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/FeatureFilling.cpp.o: /usr/local/lib/oce-0.16/../../include/oce/Handle_Poly_Triangulation.hxx
 src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/FeatureFilling.cpp.o: /usr/local/lib/oce-0.16/../../include/oce/Handle_Standard_ConstructionError.hxx
 src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/FeatureFilling.cpp.o: /usr/local/lib/oce-0.16/../../include/oce/Handle_Standard_DomainError.hxx
 src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/FeatureFilling.cpp.o: /usr/local/lib/oce-0.16/../../include/oce/Handle_Standard_Failure.hxx

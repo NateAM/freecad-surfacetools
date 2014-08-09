@@ -43,11 +43,14 @@ PROPERTY_SOURCE(SurfaceTools::Filling, Part::Feature)
 
 Filling::Filling()
 {
-    ADD_PROPERTY(Border,(0));
+    ADD_PROPERTY(Border,(0,"TopoDS_Edge"));
+//    ADD_PROPERTY(Border,(0));
     ADD_PROPERTY(BOrd,(-1));
-    ADD_PROPERTY(Curves,(0));
+    ADD_PROPERTY(Curves,(0,"TopoDS_Edge"));
+//    ADD_PROPERTY(Curves,(0));
     ADD_PROPERTY(COrd,(-1));
-    ADD_PROPERTY(Points,(0));
+    ADD_PROPERTY(Points,(0,"TopoDS_Vertex"));
+//    ADD_PROPERTY(Points,(0));
 
     ADD_PROPERTY(Degree,(3));
     ADD_PROPERTY(NbPtsOnCur,(3));
@@ -63,7 +66,7 @@ Filling::Filling()
 
 //Define Functions
 
-bool appconstr_crv(BRepFill_Filling& builder,const std::list<TopoDS_Edge>& anEdge,const std::list<int>& Order, bool bnd);
+bool appconstr_crv(BRepFill_Filling& builder,const App::PropertyLinkSubList& anEdge,const App::PropertyIntegerList& Order, bool bnd);
 
 //Check if any components of the surface have been modified
 
@@ -110,7 +113,7 @@ App::DocumentObjectExecReturn *Filling::execute(void)
 
         //Assign Boundaries
 
-        res = appconstr_crv(&builder, &Border, &BOrd, true);
+        res = appconstr_crv(builder, Border, BOrd, true);
 
         if(!res){
             Standard_Failure::Raise("Failed to create a boundary constraint. Check constraints on boundaries.");
@@ -118,7 +121,7 @@ App::DocumentObjectExecReturn *Filling::execute(void)
 
         //Assign Additional Curves
 
-        res = appconstr_crv(&builder, &Curves, &COrd, false);
+        res = appconstr_crv(builder, Curves, COrd, false);
 
         if(!res){
             Standard_Failure::Raise("Failed to create a curve constraint. Check constraints on curves.");
@@ -141,15 +144,23 @@ App::DocumentObjectExecReturn *Filling::execute(void)
 
 } //End execute
 
-bool appconstr_crv(BRepFill_Filling& builder, const std::list<TopoDS_Edge>& anEdge, const std::list<int>& Order, bool bnd){
+bool appconstr_crv(BRepFill_Filling& builder,const App::PropertyLinkSubList& anEdge,const App::PropertyIntegerList& Order, bool bnd){
 
     GeomAbs_Shape ordtmp;
 
-    std::list<int>::const_iterator bc = Order.begin();
+    std::vector<long int>::const_iterator bc = Order.getValues().begin(); //Get the order values
 
+    std::vector<App::DocumentObject*> edges = anEdge.getValues(); //Get the edges
+    Base::Type type = anEdge.getTypeId(); //Get the type id
     int res;
 
-    for (std::list<TopoDS_Edge>::const_iterator it = anEdge.begin(); it != anEdge.end(); ++it) {
+    for (std::vector<App::DocumentObject*>::const_iterator it = edges.begin(); it != edges.end(); ++it) {
+
+        Part::TopoShape ts = static_cast<Part::Feature*>(*it)->Shape.getShape();//Convert from App::DocumentObject* to Part::Feature
+        TopoDS_Shape s = ts.getSubShape(type.getName()); //Setup a shape object
+        TopoDS_Edge edge; //Setup an edge object
+        if(s.ShapeType() == TopAbs_EDGE) {edge = TopoDS::Edge(s);} //Check Shape type and assign edge
+        else{Standard_Failure::Raise("Curves must be type TopoDS_Edge");} //Raise exception
 
 	//PropertyEnumerateList doesn't exist yet. Fix when implemented
 
@@ -158,7 +169,7 @@ bool appconstr_crv(BRepFill_Filling& builder, const std::list<TopoDS_Edge>& anEd
         else if(*bc==2){ordtmp = GeomAbs_G2;}
 	else{return false;}
 
-        res = builder.Add(*it,ordtmp,bnd);
+        res = builder.Add(edge,ordtmp,bnd);
 
         if(!res){return false;}
 

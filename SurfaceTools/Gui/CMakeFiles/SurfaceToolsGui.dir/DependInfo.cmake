@@ -33,6 +33,7 @@ SET(CMAKE_TARGET_DEFINITIONS
 SET(CMAKE_TARGET_LINKED_INFO_FILES
   "/home/nathan/Desktop/free-cad-code/src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/DependInfo.cmake"
   "/home/nathan/Desktop/free-cad-code/src/Gui/CMakeFiles/FreeCADGui.dir/DependInfo.cmake"
+  "/home/nathan/Desktop/free-cad-code/src/Mod/Part/App/CMakeFiles/Part.dir/DependInfo.cmake"
   "/home/nathan/Desktop/free-cad-code/src/App/CMakeFiles/FreeCADApp.dir/DependInfo.cmake"
   "/home/nathan/Desktop/free-cad-code/src/Base/CMakeFiles/FreeCADBase.dir/DependInfo.cmake"
   )

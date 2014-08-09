@@ -5,10 +5,12 @@ include_directories(
     ${PYTHON_INCLUDE_PATH}
     ${ZLIB_INCLUDE_DIR}
     ${XERCESC_INCLUDE_DIR}
+    ${QT_QTCORE_INCLUDE_DIR}
 )
 
 set(SurfaceTools_LIBS
     FreeCADApp
+    Part
 )
 
 SET(SurfaceTools_SRCS

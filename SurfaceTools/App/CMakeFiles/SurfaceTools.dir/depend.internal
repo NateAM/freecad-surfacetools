@@ -440,6 +440,7 @@ src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/FeatureFilling.cpp.o
  /usr/local/lib/oce-0.16/../../include/oce/BRepLib_MakeFace.hxx
  /usr/local/lib/oce-0.16/../../include/oce/BRepLib_MakeShape.hxx
  /usr/local/lib/oce-0.16/../../include/oce/BRepLib_ShapeModification.hxx
+ /usr/local/lib/oce-0.16/../../include/oce/BRep_Tool.hxx
  /usr/local/lib/oce-0.16/../../include/oce/Bnd_Sphere.hxx
  /usr/local/lib/oce-0.16/../../include/oce/Bnd_Sphere.lxx
  /usr/local/lib/oce-0.16/../../include/oce/Extrema_ExtAlgo.hxx
@@ -473,12 +474,17 @@ src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/FeatureFilling.cpp.o
  /usr/local/lib/oce-0.16/../../include/oce/Handle_GeomPlate_PointConstraint.hxx
  /usr/local/lib/oce-0.16/../../include/oce/Handle_GeomPlate_SequenceNodeOfSequenceOfPointConstraint.hxx
  /usr/local/lib/oce-0.16/../../include/oce/Handle_GeomPlate_Surface.hxx
+ /usr/local/lib/oce-0.16/../../include/oce/Handle_Geom_Curve.hxx
  /usr/local/lib/oce-0.16/../../include/oce/Handle_Geom_Geometry.hxx
  /usr/local/lib/oce-0.16/../../include/oce/Handle_Geom_Surface.hxx
  /usr/local/lib/oce-0.16/../../include/oce/Handle_MMgt_TShared.hxx
  /usr/local/lib/oce-0.16/../../include/oce/Handle_Plate_SequenceNodeOfSequenceOfLinearScalarConstraint.hxx
  /usr/local/lib/oce-0.16/../../include/oce/Handle_Plate_SequenceNodeOfSequenceOfLinearXYZConstraint.hxx
  /usr/local/lib/oce-0.16/../../include/oce/Handle_Plate_SequenceNodeOfSequenceOfPinpointConstraint.hxx
+ /usr/local/lib/oce-0.16/../../include/oce/Handle_Poly_Polygon2D.hxx
+ /usr/local/lib/oce-0.16/../../include/oce/Handle_Poly_Polygon3D.hxx
+ /usr/local/lib/oce-0.16/../../include/oce/Handle_Poly_PolygonOnTriangulation.hxx
+ /usr/local/lib/oce-0.16/../../include/oce/Handle_Poly_Triangulation.hxx
  /usr/local/lib/oce-0.16/../../include/oce/Handle_Standard_ConstructionError.hxx
  /usr/local/lib/oce-0.16/../../include/oce/Handle_Standard_DomainError.hxx
  /usr/local/lib/oce-0.16/../../include/oce/Handle_Standard_Failure.hxx

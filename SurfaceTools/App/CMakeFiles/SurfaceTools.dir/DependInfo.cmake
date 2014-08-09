@@ -30,5 +30,6 @@ SET(CMAKE_TARGET_DEFINITIONS
 # Targets to which this target links.
 SET(CMAKE_TARGET_LINKED_INFO_FILES
   "/home/nathan/Desktop/free-cad-code/src/App/CMakeFiles/FreeCADApp.dir/DependInfo.cmake"
+  "/home/nathan/Desktop/free-cad-code/src/Mod/Part/App/CMakeFiles/Part.dir/DependInfo.cmake"
   "/home/nathan/Desktop/free-cad-code/src/Base/CMakeFiles/FreeCADBase.dir/DependInfo.cmake"
   )

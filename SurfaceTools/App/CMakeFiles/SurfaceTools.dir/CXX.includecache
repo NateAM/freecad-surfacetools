@@ -29,6 +29,8 @@ Base/Tools.h
 -
 Base/Exception.h
 -
+string.h
+-
 
 /home/nathan/Desktop/free-cad-code/src/Mod/SurfaceTools/App/FeatureFilling.h
 App/PropertyStandard.h

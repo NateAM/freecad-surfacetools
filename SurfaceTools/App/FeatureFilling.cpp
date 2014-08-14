@@ -34,6 +34,7 @@
 #include <gp_Pnt.hxx>
 #include <Base/Tools.h>
 #include <Base/Exception.h>
+#include <string.h>
 
 using namespace SurfaceTools;
 
@@ -115,25 +116,39 @@ App::DocumentObjectExecReturn *Filling::execute(void)
 
         res = appconstr_crv(builder, Border, BOrd, true);
 
-        if(!res){
-            Standard_Failure::Raise("Failed to create a boundary constraint. Check constraints on boundaries.");
-        }
+//        if(!res){
+//            Standard_Failure::Raise("Failed to create a boundary constraint. Check constraints on boundaries.");
+//        }
+
+        res = appconstr_crv(builder, Border, BOrd, true);
 
         //Assign Additional Curves
 
         res = appconstr_crv(builder, Curves, COrd, false);
 
-        if(!res){
-            Standard_Failure::Raise("Failed to create a curve constraint. Check constraints on curves.");
-        }
+//        if(!res){
+//            Standard_Failure::Raise("Failed to create a curve constraint. Check constraints on curves.");
+//        }
 
         //Assign Point Constraints (Do this next)
+
+        printf("Building...\n");
 
         //Build the face
         builder.Build();
 
+        printf("Build Complete\n");
+
         //Return the face
         TopoDS_Face aFace = builder.Face();
+
+        printf("We have a face!\n");
+
+        if (aFace.IsNull()){
+            return new App::DocumentObjectExecReturn("Resulting shape is null");
+        }
+        this->Shape.setValue(aFace);
+
         return App::DocumentObject::StdReturn;
 
     } //End Try
@@ -146,21 +161,80 @@ App::DocumentObjectExecReturn *Filling::execute(void)
 
 bool appconstr_crv(BRepFill_Filling& builder,const App::PropertyLinkSubList& anEdge,const App::PropertyIntegerList& Order, bool bnd){
 
+    printf("Inside appconstr_crv\n");
+
     GeomAbs_Shape ordtmp;
 
     std::vector<long int>::const_iterator bc = Order.getValues().begin(); //Get the order values
 
-    std::vector<App::DocumentObject*> edges = anEdge.getValues(); //Get the edges
-    Base::Type type = anEdge.getTypeId(); //Get the type id
+//    std::vector<App::DocumentObject*> edges = anEdge.getValues(); //Get the edges
+//    Base::Type type = anEdge.getTypeId(); //Get the type id
     int res;
 
+    printf("Entering for loop\n");
+
+//    for (std::vector<App::DocumentObject*>::const_iterator it = edges.begin(); it != edges.end(); ++it) {
+    for(int i=0; i<anEdge.getSize(); i++) {
+
+        printf("Processing curve %i\n",i);
+
+        Part::TopoShape ts;
+//        Part::TopoShape sub;
+        TopoDS_Shape sub;
+        TopoDS_Edge etmp;
+        std::vector< const char * > temp;
+       
+       //the subset has the documentobject and the element name which belongs to it,
+       // in our case for example the cube object and the "Edge1" string
+        App::PropertyLinkSubList::SubSet set = anEdge[i];
+
+        //set.obj should be our box, but just to make sure no one set something stupid
+        if(set.obj->getTypeId().isDerivedFrom(Part::Feature::getClassTypeId())) {
+       
+            //we get the shape of the document object which resemble the whole box
+            ts = static_cast<Part::Feature*>(set.obj)->Shape.getShape();
+           
+            //we want only the subshape which is linked
+            sub = ts.getSubShape(set.sub);
+            
+            if(sub.ShapeType() == TopAbs_EDGE) {etmp = TopoDS::Edge(sub);} //Check Shape type and assign edge
+            else{Standard_Failure::Raise("Curves must be type TopoDS_Edge");return false;} //Raise exception
+                
+        }
+
+        else{Standard_Failure::Raise("Boundary or Curve not from Part::Feature");return false;}
+
+        if(*bc==0){ordtmp = GeomAbs_C0;}
+        else if(*bc==1){ordtmp = GeomAbs_G1;}
+        else if(*bc==2){ordtmp = GeomAbs_G2;}
+	else{Standard_Failure::Raise("Continuity constraint must be 0, 1 or 2.");return false;}
+
+        printf("*bc: %li\n",*bc);
+
+        res = builder.Add(etmp,ordtmp,bnd);
+
+        printf("Result of builder.Add: %i\n",res);
+
+        bc++;
+
+    }
+
+    return true;
+
+}/*
     for (std::vector<App::DocumentObject*>::const_iterator it = edges.begin(); it != edges.end(); ++it) {
 
         Part::TopoShape ts = static_cast<Part::Feature*>(*it)->Shape.getShape();//Convert from App::DocumentObject* to Part::Feature
+
         TopoDS_Shape s = ts.getSubShape(type.getName()); //Setup a shape object
+
+        cout << "TopoDS_Shape s: " << s << endl; 
+
         TopoDS_Edge edge; //Setup an edge object
         if(s.ShapeType() == TopAbs_EDGE) {edge = TopoDS::Edge(s);} //Check Shape type and assign edge
         else{Standard_Failure::Raise("Curves must be type TopoDS_Edge");return false;} //Raise exception
+
+        cout << "TopoDS_Edge edge: " << edge << endl; 
 
 	//PropertyEnumerateList doesn't exist yet. Fix when implemented
 
@@ -179,4 +253,4 @@ bool appconstr_crv(BRepFill_Filling& builder,const App::PropertyLinkSubList& anE
 
     return true;
 
-}
+}*/

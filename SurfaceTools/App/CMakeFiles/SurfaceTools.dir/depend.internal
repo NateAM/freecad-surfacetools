@@ -186,9 +186,13 @@ src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/AppSurfaceTools.cpp.o
  src/Base/BaseClass.h
  src/Base/BoundBox.h
  src/Base/Console.h
+ src/Base/Exception.h
  src/Base/FileInfo.h
  src/Base/Handle.h
+ src/Base/Interpreter.h
  src/Base/Matrix.h
+ src/Base/Observer.h
+ src/Base/Parameter.h
  src/Base/Persistence.h
  src/Base/Placement.h
  src/Base/PyExport.h

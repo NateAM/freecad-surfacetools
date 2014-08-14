@@ -185,9 +185,13 @@ src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/AppSurfaceTools.cpp.o: src/
 src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/AppSurfaceTools.cpp.o: src/Base/BaseClass.h
 src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/AppSurfaceTools.cpp.o: src/Base/BoundBox.h
 src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/AppSurfaceTools.cpp.o: src/Base/Console.h
+src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/AppSurfaceTools.cpp.o: src/Base/Exception.h
 src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/AppSurfaceTools.cpp.o: src/Base/FileInfo.h
 src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/AppSurfaceTools.cpp.o: src/Base/Handle.h
+src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/AppSurfaceTools.cpp.o: src/Base/Interpreter.h
 src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/AppSurfaceTools.cpp.o: src/Base/Matrix.h
+src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/AppSurfaceTools.cpp.o: src/Base/Observer.h
+src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/AppSurfaceTools.cpp.o: src/Base/Parameter.h
 src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/AppSurfaceTools.cpp.o: src/Base/Persistence.h
 src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/AppSurfaceTools.cpp.o: src/Base/Placement.h
 src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/AppSurfaceTools.cpp.o: src/Base/PyExport.h

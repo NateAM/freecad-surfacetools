@@ -29,6 +29,9 @@
 #include <Base/Console.h>
 #include "FeatureFilling.h"
 
+#include <Base/Interpreter.h>
+#include <Base/Parameter.h>
+
 
 /* registration table  */
 extern struct PyMethodDef SurfaceTools_methods[];
@@ -40,6 +43,14 @@ PyDoc_STRVAR(module_SurfaceTools_doc,
 /* Python entry */
 extern "C" {
 void SurfaceToolsExport initSurfaceTools() {
+
+    try {
+        Base::Interpreter().runString("import Part");
+    }
+    catch(const Base::Exception& e) {
+        PyErr_SetString(PyExc_ImportError, e.what());
+        return;
+    }
 
     // ADD YOUR CODE HERE
     //

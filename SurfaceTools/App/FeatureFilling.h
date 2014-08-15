@@ -23,7 +23,6 @@
 
 #ifndef SURFACETOOLS_FEATUREFILLING_H
 #define SURFACETOOLS_FEATUREFILLING_H
-#endif
 
 #include <App/PropertyStandard.h>
 #include <App/PropertyUnits.h>
@@ -70,3 +69,4 @@ public:
 
 };
 } //Namespace SurfaceTools
+#endif

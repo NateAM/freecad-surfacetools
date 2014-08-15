@@ -183,24 +183,33 @@ void appconstr_crv(BRepFill_Filling& builder,const App::PropertyLinkSubList& anE
        // in our case for example the cube object and the "Edge1" string
         App::PropertyLinkSubList::SubSet set = anEdge[i];
 
-        //set.obj should be our box, but just to make sure no one set something stupid
-        if(set.obj->getTypeId().isDerivedFrom(Part::Feature::getClassTypeId())) {
-       
-            //we get the shape of the document object which resemble the whole box
-            ts = static_cast<Part::Feature*>(set.obj)->Shape.getShape();
-           
-            //we want only the subshape which is linked
-            sub = ts.getSubShape(set.sub);
-            
-            if(sub.ShapeType() == TopAbs_EDGE) {etmp = TopoDS::Edge(sub);} //Check Shape type and assign edge
-            else{Standard_Failure::Raise("Curves must be type TopoDS_Edge");return;} //Raise exception
+        try{
 
-            if(etmp.IsNull()){printf("Edge is null");}
-            else{printf("Edge is not null");}
+            //set.obj should be our box, but just to make sure no one set something stupid
+            if(set.obj->getTypeId().isDerivedFrom(Part::Feature::getClassTypeId())) {
+       
+                //we get the shape of the document object which resemble the whole box
+                ts = static_cast<Part::Feature*>(set.obj)->Shape.getShape();
+               
+                //we want only the subshape which is linked
+                sub = ts.getSubShape(set.sub);
+            
+                if(sub.ShapeType() == TopAbs_EDGE) {etmp = TopoDS::Edge(sub);} //Check Shape type and assign edge
+                else{Standard_Failure::Raise("Curves must be type TopoDS_Edge");return;} //Raise exception
+    
+                if(etmp.IsNull()){printf("Edge is null");}
+                else{printf("Edge is not null");}
                 
-        }
+            }
 
         else{Standard_Failure::Raise("Boundary or Curve not from Part::Feature");return;}
+
+        }
+
+        catch (Standard_Failure){
+            Standard_Failure::Raise("Check Boundary or Curve Definitions.\nShould be of form [(App.ActiveDocument.object, 'Edge Name'),...");
+            return;
+        }
 
         //PropertyEnumerateList doesn't exist yet. Fix when implemented
 

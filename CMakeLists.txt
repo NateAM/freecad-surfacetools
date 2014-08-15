@@ -127,5 +127,5 @@ if(FREECAD_BUILD_JTREADER)
 endif(FREECAD_BUILD_JTREADER)
 
 if(FREECAD_BUILD_SURFACETOOLS)
-  add_subdirectory(SurfaceTools)
+ add_subdirectory(SurfaceTools)
 endif(FREECAD_BUILD_SURFACETOOLS)

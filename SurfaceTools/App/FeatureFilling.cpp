@@ -120,8 +120,6 @@ App::DocumentObjectExecReturn *Filling::execute(void)
 //            Standard_Failure::Raise("Failed to create a boundary constraint. Check constraints on boundaries.");
 //        }
 
-        res = appconstr_crv(builder, Border, BOrd, true);
-
         //Assign Additional Curves
 
         res = appconstr_crv(builder, Curves, COrd, false);

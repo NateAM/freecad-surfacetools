@@ -85,7 +85,17 @@ short Filling::mustExecute() const
         orderB.isTouched() ||
         CFaces.isTouched() ||
         orderC.isTouched() ||
-        Points.isTouched())
+        Points.isTouched() ||
+        Degree.isTouched() ||
+        NbPtsOnCur.isTouched() ||
+        NbIter.isTouched() ||
+        Anisotropie.isTouched() ||
+        Tol2d.isTouched() ||
+        Tol3d.isTouched() ||
+        TolAng.isTouched() ||
+        TolCurv.isTouched() ||
+        MaxDeg.isTouched() ||
+        MaxSegments.isTouched())
         return 1;
     return 0;
 }

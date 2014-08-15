@@ -22,7 +22,6 @@
 
 #ifndef SURFACETOOLS_FEATURESEWING_H
 #define SURFACETOOLS_FEATURESEWING_H
-#endif
 
 #include <App/PropertyStandard.h>
 #include <App/PropertyUnits.h>
@@ -51,9 +50,10 @@ public:
     App::DocumentObjectExecReturn *execute(void);
     short mustExecute() const;
     /// returns the type name of the view provider
-    const char* getViewProviderName(void) const {
-        return "PartGui::ViewProviderFilling";
-    }
+//    const char* getViewProviderName(void) const {
+//        return "PartGui::ViewProviderFilling";
+//    }
 
 };
 }//Namespace Surfacetools
+#endif

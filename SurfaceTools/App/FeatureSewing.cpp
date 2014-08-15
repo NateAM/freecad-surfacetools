@@ -28,7 +28,7 @@
 #include <Precision.hxx>
 #endif
 
-#include "FeatureFilling.h"
+#include "FeatureSewing.h"
 #include <BRepBuilderAPI_Sewing.hxx>
 #include <BRep_Tool.hxx>
 #include <gp_Pnt.hxx>
@@ -37,11 +37,11 @@
 
 using namespace SurfaceTools;
 
-PROPERTY_SOURCE(SurfaceTools::Filling, Part::Feature)
+PROPERTY_SOURCE(SurfaceTools::Sewing, Part::Feature)
 
 //Initial values
 
-Filling::Filling()
+Sewing::Sewing()
 {
     ADD_PROPERTY(aShapeList,(0,"TopoDS_Shape"));
 
@@ -61,14 +61,13 @@ Filling::Filling()
 
 //Function Definitions
 
-void addshape(BRepFill_Filling& builder,const App::PropertyLinkSubList& aShapeList);
+void addshape(BRepBuilderAPI_Sewing& builder,const App::PropertyLinkSubList& aShapeList);
 
 //Check if any components of the surface have been modified
 
-short Filling::mustExecute() const
+short Sewing::mustExecute() const
 {
-    if (aFaceList.isTouched() ||
-        aEdgeList.isTouched() ||
+    if (aShapeList.isTouched() ||
         tol.isTouched() ||
         sewopt.isTouched() ||
         degenshp.isTouched() ||
@@ -78,7 +77,7 @@ short Filling::mustExecute() const
     return 0;
 }
 
-App::DocumentObjectExecReturn *Filling::execute(void)
+App::DocumentObjectExecReturn *Sewing::execute(void)
 {
 
     //Assign Variables
@@ -101,14 +100,14 @@ App::DocumentObjectExecReturn *Filling::execute(void)
 
         addshape(builder,aShapeList);
 
-        builder.perform(); //Perform Sewing
+        builder.Perform(); //Perform Sewing
 
         TopoDS_Shape aShape = builder.SewedShape(); //Get Shape
         
         printf("number of degenerated shapes: %i\n",builder.NbDegeneratedShapes());
         printf("number of deleted faces: %i\n",builder.NbDeletedFaces());
-        printf("number of free edges: %i\n",sew.NbFreeEdges());
-        printf("number of multiple edges: %i\n",sew.NbMultipleEdges());
+        printf("number of free edges: %i\n",builder.NbFreeEdges());
+        printf("number of multiple edges: %i\n",builder.NbMultipleEdges());
 
         if (aShape.IsNull())
             return new App::DocumentObjectExecReturn("Resulting shape is null");
@@ -123,7 +122,7 @@ App::DocumentObjectExecReturn *Filling::execute(void)
 
 } //End execute
 
-void addshape(BRepFill_Filling& builder,const App::PropertyLinkSubList& aShapeList){
+void addshape(BRepBuilderAPI_Sewing& builder,const App::PropertyLinkSubList& aShapeList){
 
     for(int i=0; i<aShapeList.getSize(); i++) {
 

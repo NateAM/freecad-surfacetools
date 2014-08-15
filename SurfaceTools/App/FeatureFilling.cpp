@@ -25,6 +25,7 @@
 #include <BRepBuilderAPI_MakeFace.hxx>
 #include <TopoDS.hxx>
 #include <TopoDS_Edge.hxx>
+#include <TopoDS_Vertex.hxx>
 #include <Precision.hxx>
 #endif
 
@@ -67,7 +68,8 @@ Filling::Filling()
 
 //Define Functions
 
-bool appconstr_crv(BRepFill_Filling& builder,const App::PropertyLinkSubList& anEdge,const App::PropertyIntegerList& Order, bool bnd);
+void appconstr_crv(BRepFill_Filling& builder,const App::PropertyLinkSubList& anEdge,const App::PropertyIntegerList& Order, Standard_Boolean bnd);
+void appconstr_pt(BRepFill_Filling& builder,const App::PropertyLinkSubList& aVertex);
 
 //Check if any components of the surface have been modified
 
@@ -114,21 +116,16 @@ App::DocumentObjectExecReturn *Filling::execute(void)
 
         //Assign Boundaries
 
-        res = appconstr_crv(builder, Border, BOrd, true);
-
-//        if(!res){
-//            Standard_Failure::Raise("Failed to create a boundary constraint. Check constraints on boundaries.");
-//        }
+        if(Border.getSize()<=1){printf("Number of Border Curves: %i\n",Border.getSize());return new App::DocumentObjectExecReturn("Border must have at least two curves defined.");}
+        else{appconstr_crv(builder, Border, BOrd, Standard_True);}
 
         //Assign Additional Curves
 
-        res = appconstr_crv(builder, Curves, COrd, false);
+        if(Curves.getSize()>0){appconstr_crv(builder, Curves, COrd, Standard_False);}
 
-//        if(!res){
-//            Standard_Failure::Raise("Failed to create a curve constraint. Check constraints on curves.");
-//        }
+        //Assign Point Constraints
 
-        //Assign Point Constraints (Do this next)
+        if(Points.getSize()>0){appconstr_pt(builder,Points);}
 
         printf("Building...\n");
 
@@ -157,7 +154,7 @@ App::DocumentObjectExecReturn *Filling::execute(void)
 
 } //End execute
 
-bool appconstr_crv(BRepFill_Filling& builder,const App::PropertyLinkSubList& anEdge,const App::PropertyIntegerList& Order, bool bnd){
+void appconstr_crv(BRepFill_Filling& builder,const App::PropertyLinkSubList& anEdge,const App::PropertyIntegerList& Order, Standard_Boolean bnd){
 
     printf("Inside appconstr_crv\n");
 
@@ -196,19 +193,25 @@ bool appconstr_crv(BRepFill_Filling& builder,const App::PropertyLinkSubList& anE
             sub = ts.getSubShape(set.sub);
             
             if(sub.ShapeType() == TopAbs_EDGE) {etmp = TopoDS::Edge(sub);} //Check Shape type and assign edge
-            else{Standard_Failure::Raise("Curves must be type TopoDS_Edge");return false;} //Raise exception
+            else{Standard_Failure::Raise("Curves must be type TopoDS_Edge");return;} //Raise exception
+
+            if(etmp.IsNull()){printf("Edge is null");}
+            else{printf("Edge is not null");}
                 
         }
 
-        else{Standard_Failure::Raise("Boundary or Curve not from Part::Feature");return false;}
+        else{Standard_Failure::Raise("Boundary or Curve not from Part::Feature");return;}
+
+        //PropertyEnumerateList doesn't exist yet. Fix when implemented
 
         if(*bc==0){ordtmp = GeomAbs_C0;}
         else if(*bc==1){ordtmp = GeomAbs_G1;}
         else if(*bc==2){ordtmp = GeomAbs_G2;}
-	else{Standard_Failure::Raise("Continuity constraint must be 0, 1 or 2.");return false;}
+	else{Standard_Failure::Raise("Continuity constraint must be 0, 1 or 2 for C0, G1, and G2.");return;}
 
         printf("*bc: %li\n",*bc);
 
+        //res = builder.Add(etmp,ordtmp,bnd);
         res = builder.Add(etmp,ordtmp,bnd);
 
         printf("Result of builder.Add: %i\n",res);
@@ -216,39 +219,41 @@ bool appconstr_crv(BRepFill_Filling& builder,const App::PropertyLinkSubList& anE
         bc++;
 
     }
+}
 
-    return true;
+void appconstr_pt(BRepFill_Filling& builder,const App::PropertyLinkSubList& aVertex){
 
-}/*
-    for (std::vector<App::DocumentObject*>::const_iterator it = edges.begin(); it != edges.end(); ++it) {
+    int res;
 
-        Part::TopoShape ts = static_cast<Part::Feature*>(*it)->Shape.getShape();//Convert from App::DocumentObject* to Part::Feature
+    for(int i=0; i<aVertex.getSize(); i++) {
 
-        TopoDS_Shape s = ts.getSubShape(type.getName()); //Setup a shape object
+        Part::TopoShape ts;
+//        Part::TopoShape sub;
+        TopoDS_Shape sub;
+        TopoDS_Vertex vtmp;
+        std::vector< const char * > temp;
+       
+       //the subset has the documentobject and the element name which belongs to it,
+       // in our case for example the cube object and the "Edge1" string
+        App::PropertyLinkSubList::SubSet set = aVertex[i];
 
-        cout << "TopoDS_Shape s: " << s << endl; 
+        if(set.obj->getTypeId().isDerivedFrom(Part::Feature::getClassTypeId())) {
+       
+            //we get the shape of the document object which resemble the whole box
+            ts = static_cast<Part::Feature*>(set.obj)->Shape.getShape();
+           
+            //we want only the subshape which is linked
+            sub = ts.getSubShape(set.sub);
+            
+            if(sub.ShapeType() == TopAbs_VERTEX) {vtmp = TopoDS::Vertex(sub);} //Check Shape type and assign edge
+            else{Standard_Failure::Raise("Curves must be type TopoDS_Vertex");} //Raise exception
+                
+        }
 
-        TopoDS_Edge edge; //Setup an edge object
-        if(s.ShapeType() == TopAbs_EDGE) {edge = TopoDS::Edge(s);} //Check Shape type and assign edge
-        else{Standard_Failure::Raise("Curves must be type TopoDS_Edge");return false;} //Raise exception
+        else{Standard_Failure::Raise("Point not from Part::Feature");}
 
-        cout << "TopoDS_Edge edge: " << edge << endl; 
-
-	//PropertyEnumerateList doesn't exist yet. Fix when implemented
-
-	if(*bc==0){ordtmp = GeomAbs_C0;}
-        else if(*bc==1){ordtmp = GeomAbs_G1;}
-        else if(*bc==2){ordtmp = GeomAbs_G2;}
-	else{return false;}
-
-        res = builder.Add(edge,ordtmp,bnd);
-
-        if(!res){return false;}
-
-        bc++;
+        res = builder.Add(BRep_Tool::Pnt(vtmp));
 
     }
-
-    return true;
-
-}*/
+    return;
+}

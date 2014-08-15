@@ -597,6 +597,8 @@ src/Mod/SurfaceTools/App/CMakeFiles/SurfaceTools.dir/FeatureFilling.cpp.o
  /usr/local/lib/oce-0.16/../../include/oce/TopoDS_Shape.lxx
  /usr/local/lib/oce-0.16/../../include/oce/TopoDS_TShape.hxx
  /usr/local/lib/oce-0.16/../../include/oce/TopoDS_TShape.lxx
+ /usr/local/lib/oce-0.16/../../include/oce/TopoDS_Vertex.hxx
+ /usr/local/lib/oce-0.16/../../include/oce/TopoDS_Vertex.lxx
  /usr/local/lib/oce-0.16/../../include/oce/TopoDS_Wire.hxx
  /usr/local/lib/oce-0.16/../../include/oce/TopoDS_Wire.lxx
  /usr/local/lib/oce-0.16/../../include/oce/gp.hxx

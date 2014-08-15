@@ -43,8 +43,7 @@ PROPERTY_SOURCE(SurfaceTools::Filling, Part::Feature)
 
 Filling::Filling()
 {
-    ADD_PROPERTY(aFaceList,(0,"TopoDS_Face"));
-    ADD_PROPERTY(aEdgeList,(0,"TopoDS_Edge"));
+    ADD_PROPERTY(aShapeList,(0,"TopoDS_Shape"));
 
     App::PropertyFloat tol;
     App::PropertyBool sewopt;         //Option for sewing (if false only control)
@@ -62,7 +61,7 @@ Filling::Filling()
 
 //Function Definitions
 
-bool addshape(BRepFill_Filling& builder,const App::PropertyLinkSubList& aShapeList);
+void addshape(BRepFill_Filling& builder,const App::PropertyLinkSubList& aShapeList);
 
 //Check if any components of the surface have been modified
 
@@ -100,23 +99,18 @@ App::DocumentObjectExecReturn *Filling::execute(void)
 
         BRepBuilderAPI_Sewing builder(atol,opt1,opt2,opt3,opt4);
 
-        res = addshape(builder,aFaceList);
-
-        if(!res){
-            Standard_Failure::Raise("Failed to add face. Check list of faces.");
-        }
-
-        res = addshape(builder,aEdgeList);
-
-        if(!res){
-            Standard_Failure::Raise("Failed to add face. Check list of faces.");
-        }
+        addshape(builder,aShapeList);
 
         builder.perform(); //Perform Sewing
 
         TopoDS_Shape aShape = builder.SewedShape(); //Get Shape
         
-        if (swept.IsNull())
+        printf("number of degenerated shapes: %i\n",builder.NbDegeneratedShapes());
+        printf("number of deleted faces: %i\n",builder.NbDeletedFaces());
+        printf("number of free edges: %i\n",sew.NbFreeEdges());
+        printf("number of multiple edges: %i\n",sew.NbMultipleEdges());
+
+        if (aShape.IsNull())
             return new App::DocumentObjectExecReturn("Resulting shape is null");
         this->Shape.setValue(aShape);
 
@@ -129,20 +123,33 @@ App::DocumentObjectExecReturn *Filling::execute(void)
 
 } //End execute
 
-bool addshape(BRepFill_Filling& builder,const App::PropertyLinkSubList& aShapeList){
+void addshape(BRepFill_Filling& builder,const App::PropertyLinkSubList& aShapeList){
 
-    std::vector<App::DocumentObject*> aShapeVec = aShapeList.getValues(); //Get the shapes to add
-    Base::Type type = aShapeList.getTypeId(); //Get the type id
+    for(int i=0; i<aShapeList.getSize(); i++) {
 
-    for (std::vector<App::DocumentObject*>::const_iterator it = aShapeVec.begin(); it != aShapeVec.end(); ++it) {
+        printf("Processing shape %i\n",i);
 
-        Part::TopoShape ts = static_cast<Part::Feature*>(*it)->Shape.getShape();//Convert from App::DocumentObject* to Part::Feature
-        TopoDS_Shape s = ts.getSubShape(type.getName()); //Setup a shape object
+        Part::TopoShape ts;
+//        Part::TopoShape sub;
+        TopoDS_Shape sub;
+        std::vector< const char * > temp;
+       
+       //the subset has the documentobject and the element name which belongs to it,
+       // in our case for example the cube object and the "Edge1" string
+        App::PropertyLinkSubList::SubSet set = aShapeList[i];
 
-        builder.add(s);
+        //set.obj should be our box, but just to make sure no one set something stupid
+        if(set.obj->getTypeId().isDerivedFrom(Part::Feature::getClassTypeId())) {
+       
+            //we get the shape of the document object which resemble the whole box
+            ts = static_cast<Part::Feature*>(set.obj)->Shape.getShape();
+           
+            //we want only the subshape which is linked
+            sub = ts.getSubShape(set.sub);
+        }
+        else{Standard_Failure::Raise("Shape item not from Part::Feature");return;}
+
+        builder.Add(sub);
 
     }
-
- return true;
-
 }

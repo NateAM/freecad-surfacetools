@@ -15,6 +15,8 @@ TopoDS.hxx
 -
 TopoDS_Edge.hxx
 -
+TopoDS_Vertex.hxx
+-
 Precision.hxx
 -
 FeatureFilling.h
@@ -2383,6 +2385,20 @@ TopoDS_Shape.hxx
 -
 TopoDS_ListIteratorOfListOfShape.hxx
 -
+
+/usr/local/lib/oce-0.16/../../include/oce/TopoDS_Vertex.hxx
+Standard.hxx
+-
+Standard_DefineAlloc.hxx
+-
+Standard_Macro.hxx
+-
+TopoDS_Shape.hxx
+-
+TopoDS_Vertex.lxx
+-
+
+/usr/local/lib/oce-0.16/../../include/oce/TopoDS_Vertex.lxx
 
 /usr/local/lib/oce-0.16/../../include/oce/TopoDS_Wire.hxx
 Standard.hxx

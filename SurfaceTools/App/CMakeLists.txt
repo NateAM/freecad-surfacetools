@@ -1,3 +1,8 @@
+if(MSVC)
+    add_definitions(-DHAVE_ACOSH -DHAVE_ASINH -DHAVE_ATANH)
++else(MSVC)
+    add_definitions(-DHAVE_LIMITS_H -DHAVE_CONFIG_H)
+endif(MSVC)
 
 include_directories(
     ${Boost_INCLUDE_DIRS}
@@ -26,6 +31,7 @@ SET(SurfaceTools_SRCS
     FeatureCut.cpp
 )
 
+link_directories(${OCC_LIBRARY_DIR})
 add_library(SurfaceTools SHARED ${SurfaceTools_SRCS})
 target_link_libraries(SurfaceTools ${SurfaceTools_LIBS})
 

@@ -29,6 +29,7 @@ SET(SurfaceToolsGui_SRCS
     Workbench.h
 )
 
+link_directories(${OCC_LIBRARY_DIR})
 add_library(SurfaceToolsGui SHARED ${SurfaceToolsGui_SRCS})
 target_link_libraries(SurfaceToolsGui ${SurfaceToolsGui_LIBS})
 

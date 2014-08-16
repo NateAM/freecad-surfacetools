@@ -175,7 +175,7 @@ App::DocumentObjectExecReturn *Filling::execute(void)
     } //End Catch
 
 } //End execute
-
+/*
 void appconstr_crv(BRepFill_Filling& builder,const App::PropertyLinkSubList& anEdge, Standard_Boolean bnd){
 
     printf("Inside appconstr_crv\n");
@@ -196,16 +196,16 @@ void appconstr_crv(BRepFill_Filling& builder,const App::PropertyLinkSubList& anE
        //the subset has the documentobject and the element name which belongs to it,
        // in our case for example the cube object and the "Edge1" string
        
-/*        printf("Pre try\n");
-
-        try{anEdge[i].obj;}
-        catch(...){
-            Standard_Failure::Raise("Check Boundary or Curve Definitions.\nShould be of form [(App.ActiveDocument.object, 'Edge Name'),...");
-            return;
-        }
-
-        printf("Made it past try\n");
-*/
+//        printf("Pre try\n");
+//
+//        try{anEdge[i].obj;}
+//        catch(...){
+//            Standard_Failure::Raise("Check Boundary or Curve Definitions.\nShould be of form [(App.ActiveDocument.object, 'Edge Name'),...");
+//            return;
+//        }
+//
+//        printf("Made it past try\n");
+//
         App::PropertyLinkSubList::SubSet set = anEdge[i];
 
         printf("Past set = anEdge[i]\n");
@@ -232,7 +232,8 @@ void appconstr_crv(BRepFill_Filling& builder,const App::PropertyLinkSubList& anE
 
     }
 }
-
+*/
+/*
 void appconstr_bface(BRepFill_Filling& builder,const App::PropertyLinkSubList& aFace, const App::PropertyIntegerList& Order){
 
     int res;
@@ -282,7 +283,7 @@ void appconstr_bface(BRepFill_Filling& builder,const App::PropertyLinkSubList& a
 
     return;
 }
-
+*/
 void appconstr_crvface(BRepFill_Filling& builder, const App::PropertyLinkSubList& anEdge, const App::PropertyLinkSubList& aFace, const App::PropertyIntegerList& Order,  Standard_Boolean bnd){
 
     int res;

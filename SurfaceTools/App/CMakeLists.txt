@@ -22,6 +22,8 @@ SET(SurfaceTools_SRCS
     FeatureFilling.cpp
     FeatureSewing.h
     FeatureSewing.cpp
+    FeatureCut.h
+    FeatureCut.cpp
 )
 
 add_library(SurfaceTools SHARED ${SurfaceTools_SRCS})

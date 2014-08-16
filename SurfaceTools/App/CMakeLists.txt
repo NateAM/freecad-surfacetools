@@ -1,6 +1,6 @@
 if(MSVC)
     add_definitions(-DHAVE_ACOSH -DHAVE_ASINH -DHAVE_ATANH)
-+else(MSVC)
+else(MSVC)
     add_definitions(-DHAVE_LIMITS_H -DHAVE_CONFIG_H)
 endif(MSVC)
 

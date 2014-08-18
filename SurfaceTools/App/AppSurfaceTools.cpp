@@ -30,6 +30,7 @@
 #include "FeatureFilling.h"
 #include "FeatureSewing.h"
 #include "FeatureCut.h"
+#include "FeatureBezSurf.h"
 
 #include <Base/Interpreter.h>
 #include <Base/Parameter.h>
@@ -64,6 +65,7 @@ void SurfaceToolsExport initSurfaceTools() {
     SurfaceTools::Filling    ::init();
     SurfaceTools::Sewing     ::init();
     SurfaceTools::Cut        ::init();
+    SurfaceTools::BezSurf    ::init();
 }
 
 } // extern "C"

@@ -20,8 +20,8 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef SURFACETOOLS_FEATURESEWING_H
-#define SURFACETOOLS_FEATURESEWING_H
+#ifndef SURFACETOOLS_FEATUREBEZSURF_H
+#define SURFACETOOLS_FEATUREBEZSURF_H
 
 #include <App/PropertyStandard.h>
 #include <App/PropertyUnits.h>
@@ -31,27 +31,22 @@
 namespace SurfaceTools
 {
 
-class SurfaceToolsExport Sewing :  public Part::Feature
+class SurfaceToolsExport BezSurf :  public Part::Feature
 {
-    PROPERTY_HEADER(SurfaceTools::Sewing);
+    PROPERTY_HEADER(SurfaceTools::BezSurf);
 
 public:
-    Sewing();
+    BezSurf();
 
-    App::PropertyLinkSubList aShapeList; //Shapes to be sewn.
-
-    App::PropertyFloat tol;
-    App::PropertyBool sewopt;         //Option for sewing (if false only control)
-    App::PropertyBool degenshp;       //Option for analysis of degenerated shapes
-    App::PropertyBool cutfreeedges;   //Option for cutting of free edges
-    App::PropertyBool nonmanifold;    //Option for non-manifold processing
+    App::PropertyLinkSubList aBezList; //Bezier curves to be turned into a face (2-4 curves allowed).
+    App::PropertyInteger filltype;      //Fill method (1, 2, or 3 for Stretch, Coons, and Curved)
 
     // recalculate the feature
     App::DocumentObjectExecReturn *execute(void);
     short mustExecute() const;
     /// returns the type name of the view provider
 //    const char* getViewProviderName(void) const {
-//        return "PartGui::ViewProviderSewing";
+//        return "PartGui::ViewProviderCut";
 //    }
 
 };

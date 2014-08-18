@@ -20,7 +20,6 @@
  *                                                                         *
  ***************************************************************************/
 
-
 #ifndef SURFACETOOLS_FEATUREFILLING_H
 #define SURFACETOOLS_FEATUREFILLING_H
 

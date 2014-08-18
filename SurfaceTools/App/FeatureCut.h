@@ -38,7 +38,7 @@ class SurfaceToolsExport Cut :  public Part::Feature
 public:
     Cut();
 
-    App::PropertyLinkSubList aShapeList; //Shapes (Edges and Faces) to be sewn.
+    App::PropertyLinkSubList aShapeList; //Shapes to be cut.
 
     // recalculate the feature
     App::DocumentObjectExecReturn *execute(void);

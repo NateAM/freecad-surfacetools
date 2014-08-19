@@ -34,6 +34,8 @@
 #include "FeatureBezSurf.h"
 #include <GeomFill.hxx>
 #include <GeomFill_BezierCurves.hxx>
+#include <ShapeFix_Wire.hxx>
+#include <ShapeExtend_WireData.hxx>
 #include <BRep_Tool.hxx>
 #include <BRepBuilderAPI_MakeFace.hxx>
 #include <BRepBuilderAPI_MakeWire.hxx>
@@ -66,7 +68,7 @@ struct crvs{
 
 //Functions
 
-void getCurves(GeomFill_BezierCurves& aBuilder,BRepBuilderAPI_MakeWire& aWireBuilder,const App::PropertyLinkSubList& anEdge, GeomFill_FillingStyle fstyle);
+void getCurves(GeomFill_BezierCurves& aBuilder,TopoDS_Wire& aWire,const App::PropertyLinkSubList& anEdge, GeomFill_FillingStyle fstyle);
 //bool orderCurves(crvs& Cs, int size);
 
 //Check if any components of the surface have been modified
@@ -101,18 +103,19 @@ App::DocumentObjectExecReturn *BezSurf::execute(void)
         //Create Bezier Surface
 
         GeomFill_BezierCurves aSurfBuilder; //Create Surface Builder
-        BRepBuilderAPI_MakeWire aWireBuilder; //Create Wire Builder
+//        BRepBuilderAPI_MakeWire aWireBuilder; //Create Wire Builder
+        TopoDS_Wire aWire; //Create empty wire
 
         //Get Bezier Curves from edges and initialize the builder
 
-        getCurves(aSurfBuilder,aWireBuilder,aBezList,fstyle);
+        getCurves(aSurfBuilder,aWire,aBezList,fstyle);
 
         //Create the surface
 
         const Handle_Geom_BezierSurface aSurface = aSurfBuilder.Surface();
-        aWireBuilder.Build();
-        const TopoDS_Wire aWire = aWireBuilder.Wire(); //Get the wire
-        if(!aWireBuilder.IsDone()){return new App::DocumentObjectExecReturn("Wire unable to be constructed");}
+//        aWireBuilder.Build();
+//        const TopoDS_Wire aWire = aWireBuilder.Wire(); //Get the wire
+        if(aWire.IsNull()){return new App::DocumentObjectExecReturn("Wire unable to be constructed");}
 
         BRepBuilderAPI_MakeFace aFaceBuilder(aSurface,aWire,Standard_True); //Create Face Builder
         aFaceBuilder.Build(); //Build Face (Maybe not required?)
@@ -135,11 +138,14 @@ App::DocumentObjectExecReturn *BezSurf::execute(void)
 
 } //End execute
 
-void getCurves(GeomFill_BezierCurves& aBuilder,BRepBuilderAPI_MakeWire& aWireBuilder, const App::PropertyLinkSubList& anEdge, GeomFill_FillingStyle fstyle){
+void getCurves(GeomFill_BezierCurves& aBuilder,TopoDS_Wire& aWire, const App::PropertyLinkSubList& anEdge, GeomFill_FillingStyle fstyle){
 
     crvs bcrv;
     Standard_Real u0 = 0.;
     Standard_Real u1 = 1.;
+
+    Handle(ShapeFix_Wire) aShFW = new ShapeFix_Wire;
+    Handle(ShapeExtend_WireData) aWD = new ShapeExtend_WireData;
 
     if(anEdge.getSize()>4){Standard_Failure::Raise("Only 2-4 continuous Bezier Curves are allowed");return;}
 
@@ -166,7 +172,7 @@ void getCurves(GeomFill_BezierCurves& aBuilder,BRepBuilderAPI_MakeWire& aWireBui
             if(sub.ShapeType() == TopAbs_EDGE) {etmp = TopoDS::Edge(sub);e_loc = etmp.Location();} //Check Shape type and assign edge
             else{Standard_Failure::Raise("Curves must be type TopoDS_Edge");return;} //Raise exception
 
-            aWireBuilder.Add(etmp); //Add edge to wire
+            aWD->Add (etmp); //Add edge to wire
             c_geom = BRep_Tool::Curve(etmp,e_loc,u0,u1); //Get Curve Geometry
             b_geom = Handle_Geom_BezierCurve::DownCast(c_geom); //Try to get Bezier curve
 
@@ -196,6 +202,15 @@ void getCurves(GeomFill_BezierCurves& aBuilder,BRepBuilderAPI_MakeWire& aWireBui
     if(ncrv==2){aBuilder.Init(bcrv.C1,bcrv.C2,fstyle);}
     else if(ncrv==3){aBuilder.Init(bcrv.C1,bcrv.C2,bcrv.C3,fstyle);}
     else if(ncrv==4){aBuilder.Init(bcrv.C1,bcrv.C2,bcrv.C3,bcrv.C4,fstyle);}
+
+    aShFW->Load (aWD);
+    aShFW->ClosedWireMode() = Standard_True; //or False - as needed
+    aShFW->FixSelfIntersection(); //Fix Self Intersection 	
+    aShFW->FixReorder(); //Reoreder wires
+    aShFW->FixConnected(); //Fix connection of endpoints
+    aShFW->Perform(); //Perform the fixes
+
+    aWire = aShFW->Wire(); //Return the wire
 
     return;
 }

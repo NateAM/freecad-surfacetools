@@ -31,6 +31,7 @@
 #include "FeatureSewing.h"
 #include "FeatureCut.h"
 #include "FeatureBezSurf.h"
+#include "FeatureBSplineSurf.h"
 
 #include <Base/Interpreter.h>
 #include <Base/Parameter.h>
@@ -62,10 +63,11 @@ void SurfaceToolsExport initSurfaceTools() {
     Base::Console().Log("Loading SurfaceTools module... done\n");
 
     // Add types to module
-    SurfaceTools::Filling    ::init();
-    SurfaceTools::Sewing     ::init();
-    SurfaceTools::Cut        ::init();
-    SurfaceTools::BezSurf    ::init();
+    SurfaceTools::Filling        ::init();
+    SurfaceTools::Sewing         ::init();
+    SurfaceTools::Cut            ::init();
+    SurfaceTools::BezSurf        ::init();
+    SurfaceTools::BSplineSurf    ::init();
 }
 
 } // extern "C"

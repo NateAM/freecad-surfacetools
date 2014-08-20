@@ -31,6 +31,8 @@ SET(SurfaceTools_SRCS
     FeatureCut.cpp
     FeatureBezSurf.h
     FeatureBezSurf.cpp
+    FeatureBSplineSurf.h
+    FeatureBSplineSurf.cpp
 )
 
 link_directories(${OCC_LIBRARY_DIR})

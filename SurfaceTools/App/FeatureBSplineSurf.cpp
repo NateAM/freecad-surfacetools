@@ -27,13 +27,13 @@
 #include <TopoDS_Face.hxx>
 #include <TopoDS_Edge.hxx>
 #include <TopoDS_Wire.hxx>
-#include <Geom_BezierCurve.hxx>
+#include <Geom_BSplineCurve.hxx>
 #include <Precision.hxx>
 #endif
 
-#include "FeatureBezSurf.h"
+#include "FeatureBSplineSurf.h"
 #include <GeomFill.hxx>
-#include <GeomFill_BezierCurves.hxx>
+#include <GeomFill_BSplineCurves.hxx>
 #include <ShapeFix_Wire.hxx>
 #include <ShapeExtend_WireData.hxx>
 #include <BRep_Tool.hxx>
@@ -45,13 +45,13 @@
 
 using namespace SurfaceTools;
 
-PROPERTY_SOURCE(SurfaceTools::BezSurf, Part::Feature)
+PROPERTY_SOURCE(SurfaceTools::BSplineSurf, Part::Feature)
 
 //Initial values
 
-BezSurf::BezSurf()
+BSplineSurf::BSplineSurf()
 {
-    ADD_PROPERTY(aBezList,(0,"Geom_BezierCurve"));
+    ADD_PROPERTY(aBSplineList,(0,"Geom_BSplineCurve"));
     ADD_PROPERTY(filltype,(1));
 
 }
@@ -60,29 +60,29 @@ BezSurf::BezSurf()
 
 struct crvs{
 
-    Handle_Geom_BezierCurve C1;
-    Handle_Geom_BezierCurve C2;
-    Handle_Geom_BezierCurve C3;
-    Handle_Geom_BezierCurve C4;
+    Handle_Geom_BSplineCurve C1;
+    Handle_Geom_BSplineCurve C2;
+    Handle_Geom_BSplineCurve C3;
+    Handle_Geom_BSplineCurve C4;
 
 };
 
 //Functions
 
-void getCurves(GeomFill_BezierCurves& aBuilder,TopoDS_Wire& aWire, const App::PropertyLinkSubList& anEdge, GeomFill_FillingStyle fstyle);
+void getCurves(GeomFill_BSplineCurves& aBuilder,TopoDS_Wire& aWire, const App::PropertyLinkSubList& anEdge, GeomFill_FillingStyle fstyle);
 //bool orderCurves(crvs& Cs, int size);
 
 //Check if any components of the surface have been modified
 
-short BezSurf::mustExecute() const
+short BSplineSurf::mustExecute() const
 {
-    if (aBezList.isTouched() ||
+    if (aBSplineList.isTouched() ||
         filltype.isTouched())
         return 1;
     return 0;
 }
 
-App::DocumentObjectExecReturn *BezSurf::execute(void)
+App::DocumentObjectExecReturn *BSplineSurf::execute(void)
 {
 
     //Set Variables
@@ -101,27 +101,30 @@ App::DocumentObjectExecReturn *BezSurf::execute(void)
         else if(ftype==3){fstyle = GeomFill_CurvedStyle;}
         else{return new App::DocumentObjectExecReturn("Filling style must be 1 (Stretch), 2 (Coons), or 3 (Curved).");}
 
-        //Create Bezier Surface
+        //Create BSpline Surface
 
-        GeomFill_BezierCurves aSurfBuilder; //Create Surface Builder
+        GeomFill_BSplineCurves aSurfBuilder; //Create Surface Builder
 //        BRepBuilderAPI_MakeWire aWireBuilder; //Create Wire Builder
         TopoDS_Wire aWire; //Create empty wire
 
-        //Get Bezier Curves from edges and initialize the builder
+        //Get BSpline Curves from edges and initialize the builder
 
-        getCurves(aSurfBuilder,aWire,aBezList,fstyle);
+        printf("Entering getCurves\n");
+        getCurves(aSurfBuilder,aWire,aBSplineList,fstyle);
 
         //Create the surface
+        printf("Creating the Surface\n");
+        const Handle_Geom_BSplineSurface aSurface = aSurfBuilder.Surface();
 
-        const Handle_Geom_BezierSurface aSurface = aSurfBuilder.Surface();
+        printf("Creating the Face\n");
+        BRepBuilderAPI_MakeFace aFaceBuilder(aSurface,aWire,Standard_True); //Create Face Builder
+//        Standard_Real u0 = 0.;
+//        Standard_Real u1 = 2.;
+//        Standard_Real v0 = 0.;
+//        Standard_Real v1 = 2.;
+//        aFaceBuilder.Init(aSurface,u0,u1,v0,v1,Precision::Confusion());
 
-        BRepBuilderAPI_MakeFace aFaceBuilder;//(aSurface,aWire,Standard_True); //Create Face Builder
-        Standard_Real u0 = 0.;
-        Standard_Real u1 = 1.;
-        Standard_Real v0 = 0.;
-        Standard_Real v1 = 1.;
-        aFaceBuilder.Init(aSurface,u0,u1,v0,v1,Precision::Confusion());
-
+        printf("Returning the Face\n");
         TopoDS_Face aFace = aFaceBuilder.Face(); //Returned Face
         if(!aFaceBuilder.IsDone()){return new App::DocumentObjectExecReturn("Face unable to be constructed");}
 
@@ -140,7 +143,7 @@ App::DocumentObjectExecReturn *BezSurf::execute(void)
 
 } //End execute
 
-void getCurves(GeomFill_BezierCurves& aBuilder,TopoDS_Wire& aWire, const App::PropertyLinkSubList& anEdge, GeomFill_FillingStyle fstyle){
+void getCurves(GeomFill_BSplineCurves& aBuilder,TopoDS_Wire& aWire, const App::PropertyLinkSubList& anEdge, GeomFill_FillingStyle fstyle){
 //void getCurves(TopoDS_Wire& aWire, const App::PropertyLinkSubList& anEdge){
 
     crvs bcrv;
@@ -151,8 +154,8 @@ void getCurves(GeomFill_BezierCurves& aBuilder,TopoDS_Wire& aWire, const App::Pr
     Handle(ShapeFix_Wire) aShFW = new ShapeFix_Wire;
     Handle(ShapeExtend_WireData) aWD = new ShapeExtend_WireData;
 
-    if(anEdge.getSize()>4){Standard_Failure::Raise("Only 2-4 continuous Bezier Curves are allowed");return;}
-    if(anEdge.getSize()<2){Standard_Failure::Raise("Only 2-4 continuous Bezier Curves are allowed");return;}
+    if(anEdge.getSize()>4){Standard_Failure::Raise("Only 2-4 continuous BSpline Curves are allowed");return;}
+    if(anEdge.getSize()<2){Standard_Failure::Raise("Only 2-4 continuous BSpline Curves are allowed");return;}
 
     for(int i=0; i<anEdge.getSize(); i++){
         
@@ -195,16 +198,15 @@ void getCurves(GeomFill_BezierCurves& aBuilder,TopoDS_Wire& aWire, const App::Pr
 
     if(aWire.IsNull()){Standard_Failure::Raise("Wire unable to be constructed");return;}
 
-    //Create Bezier Surface
+    //Create BSpline Surface
 
     TopExp_Explorer anExp (aWire, TopAbs_EDGE);
     int it = 0;
     for (; anExp.More(); anExp.Next()) {
-        printf("it: %i",it);
         const TopoDS_Edge hedge = TopoDS::Edge (anExp.Current());
         TopLoc_Location heloc = hedge.Location();
         Handle_Geom_Curve c_geom = BRep_Tool::Curve(hedge,heloc,u0,u1); //The geometric curve
-        Handle_Geom_BezierCurve b_geom = Handle_Geom_BezierCurve::DownCast(c_geom); //Try to get Bezier curve
+        Handle_Geom_BSplineCurve b_geom = Handle_Geom_BSplineCurve::DownCast(c_geom); //Try to get BSpline curve
         
         if (!b_geom.IsNull()) {
             //Store Underlying Geometry
@@ -215,7 +217,7 @@ void getCurves(GeomFill_BezierCurves& aBuilder,TopoDS_Wire& aWire, const App::Pr
 
         }
         else {
-            Standard_Failure::Raise("Curve not a Bezier Curve");
+            Standard_Failure::Raise("Curve not a BSpline Curve");
             return;
         }      
 

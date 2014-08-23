@@ -77,6 +77,10 @@ class SurfaceToolsWorkbench ( Workbench ):
 	def Initialize(self):
 		# load the module
 		import SurfaceToolsGui
+                import FreeCADGui
+
+                # Set path to icon labels
+                FreeCADGui.addIconPath('./Gui/Resources/Icons/')
 	def GetClassName(self):
 		return "SurfaceToolsGui::Workbench"
 

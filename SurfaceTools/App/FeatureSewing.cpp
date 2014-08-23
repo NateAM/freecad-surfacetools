@@ -108,6 +108,7 @@ App::DocumentObjectExecReturn *Sewing::execute(void)
         printf("number of deleted faces: %i\n",builder.NbDeletedFaces());
         printf("number of free edges: %i\n",builder.NbFreeEdges());
         printf("number of multiple edges: %i\n",builder.NbMultipleEdges());
+        printf("number of continuous edges: %i\n",builder.NbContigousEdges());
 
         if (aShape.IsNull())
             return new App::DocumentObjectExecReturn("Resulting shape is null");

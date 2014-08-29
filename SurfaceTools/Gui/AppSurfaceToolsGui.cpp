@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (c) YEAR YOUR NAME         <Your e-mail address>            *
+ *   Copyright (c) 2014 Nathan Miller         <Nathan.A.Mill[at]gmail.com> *
  *                                                                         *
  *   This file is part of the FreeCAD CAx development system.              *
  *                                                                         *
@@ -21,6 +21,7 @@
  ***************************************************************************/
 
 
+
 #include "PreCompiled.h"
 #ifndef _PreComp_
 # include <Python.h>
@@ -30,6 +31,7 @@
 #include <Gui/Application.h>
 
 #include "Workbench.h"
+#include "ViewProviderCut.h"
 
 // use a different name to CreateCommand()
 void CreateSurfaceToolsCommands(void);
@@ -55,9 +57,7 @@ void SurfaceToolsGuiExport initSurfaceToolsGui()
     CreateSurfaceToolsCommands();
     SurfaceToolsGui::Workbench::init();
 
-    // ADD YOUR CODE HERE
-    //
-    //
+    SurfaceToolsGui::ViewProviderCut::init();
 
     (void) Py_InitModule3("SurfaceToolsGui", SurfaceToolsGui_methods, module_SurfaceToolsGui_doc);   /* mod name, table ptr */
     Base::Console().Log("Loading GUI of SurfaceTools module... done\n");

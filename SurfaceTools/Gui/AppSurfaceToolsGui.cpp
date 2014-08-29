@@ -31,7 +31,7 @@
 #include <Gui/Application.h>
 
 #include "Workbench.h"
-#include "ViewProviderCut.h"
+//#include "ViewProviderCut.h"
 
 // use a different name to CreateCommand()
 void CreateSurfaceToolsCommands(void);
@@ -57,7 +57,7 @@ void SurfaceToolsGuiExport initSurfaceToolsGui()
     CreateSurfaceToolsCommands();
     SurfaceToolsGui::Workbench::init();
 
-    SurfaceToolsGui::ViewProviderCut::init();
+//    SurfaceToolsGui::ViewProviderCut::init();
 
     (void) Py_InitModule3("SurfaceToolsGui", SurfaceToolsGui_methods, module_SurfaceToolsGui_doc);   /* mod name, table ptr */
     Base::Console().Log("Loading GUI of SurfaceTools module... done\n");

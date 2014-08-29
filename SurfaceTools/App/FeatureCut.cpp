@@ -86,8 +86,7 @@ App::DocumentObjectExecReturn *Cut::execute(void)
         printf("Get first toposhape\n");
         if(set1.obj->getTypeId().isDerivedFrom(Part::Feature::getClassTypeId())) {
 
-            ts1 = static_cast<Part::Feature*>(set1.obj)->Shape.getShape();
-            sub1 = ts1.getSubShape(set1.sub); //Shape 1
+            ts1 = static_cast<Part::Feature*>(set1.obj)->Shape.getShape(); //Part::TopoShape 1
 
         }
         else{return new App::DocumentObjectExecReturn("Shape1 not from Part::Feature");}
@@ -97,80 +96,19 @@ App::DocumentObjectExecReturn *Cut::execute(void)
         if(set2.obj->getTypeId().isDerivedFrom(Part::Feature::getClassTypeId())) {
 
             ts2 = static_cast<Part::Feature*>(set2.obj)->Shape.getShape();
-            printf("ts2 cast\n");
-            sub2 = ts2.getSubShape(set2.sub); //Shape 2
-            printf("got sub2\n");
 
         }
         else{return new App::DocumentObjectExecReturn("Shape2 not from Part::Feature");}
 
-        //Cut every face in Shape1 by every face in Shape2
-
-        TopoDS_Compound aCompound;  //Shape returned by cutting algorithm
-        TopoDS_Shape prevCut;       //Shape used in iteration (previous cut face)
-        TopoDS_Builder aCompBuilder;   //Builder used for compound shape
-
-        aCompBuilder.MakeCompound(aCompound); //Create an empty compound surface
-
-        //Loop over shape1
-        printf("Loop1\n");
-        for( TopExp_Explorer ex1(sub1, TopAbs_FACE); ex1.More(); ex1.Next() )
-        {
-            //Current face in shape1
-            TopoDS_Face currentFace1 = TopoDS::Face( ex1.Current() );
-
-            int i=0;
-
-            //Loop over shape2
-            printf("Loop2\n");
-            for( TopExp_Explorer ex2(sub2, TopAbs_FACE); ex2.More(); ex2.Next() )
-            {
-                //Current face in shape2
-                TopoDS_Face currentFace2 = TopoDS::Face( ex2.Current() );
-
-                //Check if first time cutting currentFace1
-                if(i==0){
-                    printf("If\n");
-                    //Make cut builder
-                    BRepAlgoAPI_Cut builder(currentFace1,currentFace2);
-                    //Cut Shape
-                    builder.Build();
-                    //Refine the edges
-                    builder.RefineEdges();
-                    //Define the previous cut as the current builder shape
-                    prevCut = builder.Shape();
-                }
-                else{
-                    printf("Else\n");
-                    //Make cut builder
-                    BRepAlgoAPI_Cut builder(prevCut,currentFace2);
-                    //Cut Shape
-                    builder.Build();
-                    //Refine the edges
-                    builder.RefineEdges();
-                    //Define the previous cut as the current builder shape
-                    prevCut = builder.Shape();
-                }
-
-                i++;    
-
-            }
-
-            //Check if shape is not null
-            if(!prevCut.IsNull()){
-                printf("Adding to compound\n");
-                //Add shape to Shell
-                aCompBuilder.Add(aCompound,prevCut);
-                printf("Successful compound adding\n");
-            }  
-
-        }
+        //Cut Shape1 by Shape2
+        TopoDS_Shape aCutShape;
+        aCutShape = ts1.cut(ts2._Shape);
 
         //Check if resulting shell is null
-        if (aCompound.IsNull()){
+        if (aCutShape.IsNull()){
             return new App::DocumentObjectExecReturn("Resulting shape is null");
         }
-        this->Shape.setValue(prevCut);
+        this->Shape.setValue(aCutShape);
 
     } //End Try
     catch (Standard_Failure) {

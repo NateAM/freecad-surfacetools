@@ -27,8 +27,8 @@ SET(SurfaceToolsGui_SRCS
     PreCompiled.h
     Workbench.cpp
     Workbench.h
-    ViewProviderCut.cpp
-    ViewProviderCut.h
+#    ViewProviderCut.cpp
+#    ViewProviderCut.h
 )
 
 link_directories(${OCC_LIBRARY_DIR})

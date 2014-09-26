@@ -40,15 +40,17 @@ public:
 
     //Properties of Curves
 
-    App::PropertyLinkSubList Border;  // Border Edges (C0 is required for edges without a corresponding face)  
-    App::PropertyLinkSubList Curves;  // Other Constraint Curves (C0 is required for edges without a corresponding face)
+    App::PropertyLinkSubList Border;   // Border Edges (C0 is required for edges without a corresponding face)  
+    App::PropertyLinkSubList Curves;   // Other Constraint Curves (C0 is required for edges without a corresponding face)
 
-    App::PropertyLinkSubList BFaces;  // Border Faces (C0, G1 and G2 are possible)
-    App::PropertyIntegerList orderB;  // Order of constraint on border faces
-    App::PropertyLinkSubList CFaces;  // Curve Faces (C0, G1 and G2 are possible)
-    App::PropertyIntegerList orderC;  // Order of constraint on curve faces
+    App::PropertyLinkSubList BFaces;   // Border Faces (C0, G1 and G2 are possible)
+    App::PropertyIntegerList orderB;   // Order of constraint on border faces
+    App::PropertyLinkSubList CFaces;   // Curve Faces (C0, G1 and G2 are possible)
+    App::PropertyIntegerList orderC;   // Order of constraint on curve faces
 
-    App::PropertyLinkSubList Points;  // Constraint Points (on Surface)
+    App::PropertyLinkSubList Points;   // Constraint Points (on Surface)
+
+    App::PropertyLinkSubList initFace; // Initial Face to use 
 
     //Algorithm Variables
     App::PropertyInteger Degree;      //Starting degree

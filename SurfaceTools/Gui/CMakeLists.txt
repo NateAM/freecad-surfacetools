@@ -1,14 +1,22 @@
+if(MSVC)
+    add_definitions(-DHAVE_ACOSH -DHAVE_ATANH -DHAVE_ASINH)
+else(MSVC)
+    add_definitions(-DHAVE_LIMITS_H -DHAVE_CONFIG_H)
+endif(MSVC)
 
 include_directories(
+    ${CMAKE_BINARY_DIR}
     ${CMAKE_SOURCE_DIR}/src
+    ${CMAKE_BINARY_DIR}/src
     ${CMAKE_CURRENT_BINARY_DIR}
     ${Boost_INCLUDE_DIRS}
     ${COIN3D_INCLUDE_DIR}
-    ${QT_INCLUDE_DIR}
-    ${ZLIB_INCLUDE_DIR}
-    ${SOQT_INCLUDE_DIR}
+    ${OCC_INCLUDE_DIR}
     ${PYTHON_INCLUDE_PATH}
+    ${SOQT_INCLUDE_DIR}
+    ${QT_INCLUDE_DIR}
     ${XERCESC_INCLUDE_DIR}
+    ${ZLIB_INCLUDE_DIR}
 )
 
 set(SurfaceToolsGui_LIBS

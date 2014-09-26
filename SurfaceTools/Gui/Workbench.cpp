@@ -45,20 +45,34 @@ Workbench::~Workbench()
 
 Gui::MenuItem* Workbench::setupMenuBar() const
 {
+
     Gui::MenuItem* root = StdWorkbench::setupMenuBar();
     Gui::MenuItem* item = root->findItem( "&Windows" );
-    Gui::MenuItem* test = new Gui::MenuItem;
-    root->insertItem( item, test );
-    test->setCommand("SurfaceTools");
-    *test << "SurfaceTools_Test";
+
+    Gui::MenuItem* make = new Gui::MenuItem;
+    root->insertItem( item, make );
+    make->setCommand("MakeSurface");
+    *make << "SurfaceTools_Filling";
+
+    Gui::MenuItem* mod = new Gui::MenuItem;
+    root->insertItem( item, mod );
+    mod->setCommand("ModSurface");
+    *mod << "SurfaceTools_Cut";
+
     return root;
 }
 
 Gui::ToolBarItem* Workbench::setupToolBars() const
 {
     Gui::ToolBarItem* root = StdWorkbench::setupToolBars();
-    Gui::ToolBarItem* test = new Gui::ToolBarItem(root);
-    test->setCommand( "SurfaceTools Tools" );
-    *test << "SurfaceTools_Test"; 
+
+    Gui::ToolBarItem* make = new Gui::ToolBarItem(root);
+    make->setCommand( "MakeSurface" );
+    *make << "SurfaceTools_Filling"; 
+
+    Gui::ToolBarItem* mod = new Gui::ToolBarItem(root);
+    mod->setCommand( "ModSurface" );
+    *mod << "SurfaceTools_Cut"; 
+
     return root;
 }

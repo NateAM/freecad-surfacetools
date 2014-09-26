@@ -56,6 +56,8 @@ Filling::Filling()
 
     ADD_PROPERTY(Points,(0,"TopoDS_Vertex"));
 
+    ADD_PROPERTY(initFace,(0,"TopoDS_Face"));
+
     ADD_PROPERTY(Degree,(3));
     ADD_PROPERTY(NbPtsOnCur,(3));
     ADD_PROPERTY(NbIter,(2));
@@ -74,6 +76,7 @@ void appconstr_crv(BRepFill_Filling& builder,const App::PropertyLinkSubList& anE
 void appconstr_bface(BRepFill_Filling& builder,const App::PropertyLinkSubList& aFace, const App::PropertyIntegerList& Order);
 void appconstr_crvface(BRepFill_Filling& builder, const App::PropertyLinkSubList& anEdge, const App::PropertyLinkSubList& aFace, const App::PropertyIntegerList& Order,  Standard_Boolean bnd);
 void appconstr_pt(BRepFill_Filling& builder,const App::PropertyLinkSubList& aVertex);
+void appinitface(BRepFill_Filling& builder,const App::PropertyLinkSubList& aFace);
 
 //Check if any components of the surface have been modified
 
@@ -86,6 +89,7 @@ short Filling::mustExecute() const
         CFaces.isTouched() ||
         orderC.isTouched() ||
         Points.isTouched() ||
+        initFace.isTouched() ||
         Degree.isTouched() ||
         NbPtsOnCur.isTouched() ||
         NbIter.isTouched() ||
@@ -149,6 +153,10 @@ App::DocumentObjectExecReturn *Filling::execute(void)
         //Assign Point Constraints
 
         if(Points.getSize()>0){appconstr_pt(builder,Points);}
+
+        //Assign Initial Face
+
+        if(initFace.getSize()>0){appinitface(builder,initFace);}
 
         printf("Building...\n");
 
@@ -414,5 +422,40 @@ void appconstr_pt(BRepFill_Filling& builder,const App::PropertyLinkSubList& aVer
         res = builder.Add(BRep_Tool::Pnt(vtmp));
 
     }
+    return;
+}
+
+void appinitface(BRepFill_Filling& builder,const App::PropertyLinkSubList& aFace){
+
+    int res;
+
+    if(aFace.getSize()>1){Standard_Failure::Raise("Only one face may be used for the initial face");return;}
+
+    Part::TopoShape ts;
+//        Part::TopoShape sub;
+    TopoDS_Shape sub;
+    TopoDS_Face face;
+       
+    //the subset has the documentobject and the element name which belongs to it,
+    // in our case for example the cube object and the "Vertex1" string
+    App::PropertyLinkSubList::SubSet set = aFace[0];
+
+    if(set.obj->getTypeId().isDerivedFrom(Part::Feature::getClassTypeId())) {
+       
+        //we get the shape of the document object which resemble the whole box
+        ts = static_cast<Part::Feature*>(set.obj)->Shape.getShape();
+           
+        //we want only the subshape which is linked
+        sub = ts.getSubShape(set.sub);
+            
+        if(sub.ShapeType() == TopAbs_FACE) {face = TopoDS::Face(sub);} //Check Shape type and assign edge
+        else{Standard_Failure::Raise("Faces must be type TopoDS_Face");} //Raise exception
+                
+    }
+
+    else{Standard_Failure::Raise("Point not from Part::Feature");}
+
+    builder.LoadInitSurface(face);
+
     return;
 }

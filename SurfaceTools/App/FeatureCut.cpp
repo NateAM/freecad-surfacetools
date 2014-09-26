@@ -68,8 +68,8 @@ App::DocumentObjectExecReturn *Cut::execute(void)
     //Begin Construction
     try{
 
-        if(aShapeList.getSize()>2){
-            return new App::DocumentObjectExecReturn("Only two shapes may be entered at a time for a cut operation");
+        if((aShapeList.getSize()>2) || (aShapeList.getSize()<2)){
+            return new App::DocumentObjectExecReturn("Two shapes must be entered at a time for a cut operation");
         }
 
         //Initialize variables for first toposhape from document object
